@@ -4,9 +4,7 @@
 
 ## Стек технологий 
 Frontend: Vue3, TypeScript 
-
 Backend: Python
-
 СУБД: PostgreSQL
 
 ## Как запустить 
