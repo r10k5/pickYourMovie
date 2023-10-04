@@ -1,9 +1,16 @@
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
 </script>
 
 <template>
   <main>
-    <TheWelcome />
+    <div class="square"> </div>
   </main>
 </template>
+
+<style scoped> 
+.square{
+  height: 100px;
+  width: 200px;
+  background-color: rgb(200,110,205);
+  }
+</style>
