@@ -1,35 +1,23 @@
-@import './base.css';
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+* {
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+}
+
+body, #app {
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #363636;
+  display: flex; /**/
+}
 #app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-
-  font-weight: normal;
+  padding: 158px 98px;
 }
-
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-}
-
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
-}
-
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
-
+@media (max-width: 1360px) {
   #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
+    gap: 24px;
+    flex-direction: column-reverse;
   }
 }
