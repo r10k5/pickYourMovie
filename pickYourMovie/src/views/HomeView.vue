@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import AppIcon from '@/components/icons/AppIcon.vue';
+import AppLink from '@/components/AppLink.vue';
 </script>
 
 <template>
@@ -8,8 +9,11 @@ import AppIcon from '@/components/icons/AppIcon.vue';
       Подберем фильм для вашего вечера
     </h2>
     <p class="description">
-      Сервис подберет наилучшее решение для всей семьи бла бла бла
+      Сервис подберет наилучшее решение для семьи и компании!
     </p>
+    <AppLink to="about" class="link">
+      Подробнее о сервисе ->
+    </AppLink>
     <button type="button" class="button">
       Попробовать
     </button>
@@ -20,6 +24,10 @@ import AppIcon from '@/components/icons/AppIcon.vue';
 </template>
 
 <style scoped> 
+.link {
+  margin-top: 32px;
+}
+
 .text-content {
   display: flex;
   flex-direction: column;
@@ -40,7 +48,7 @@ import AppIcon from '@/components/icons/AppIcon.vue';
   margin-bottom: 44px;
 }
 .description {
-  color: #DCDCDC;
+  color: #cecece;
   font-size: 40px;
   font-weight: 400;
   margin: 0;
@@ -51,7 +59,7 @@ import AppIcon from '@/components/icons/AppIcon.vue';
   border-radius: 60px;
   background: linear-gradient(180deg, #E8505B 0%, #8B3037 100%);
   margin: auto 0 0 0;
-  color: #FFF;
+  color: #E7E6E6;
   font-size: 40px;
   font-weight: 400;
   border: none;
