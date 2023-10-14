@@ -1,13 +1,19 @@
 <script setup lang="ts">
 import AppLogo from './icons/AppLogo.vue';
 import { useRoute } from 'vue-router';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const route = useRoute();
+
+function returnHome() {
+    router.push({ name: 'home' })
+}
 </script>
 
 <template>
     <div class="app-header">
-        <AppLogo width="106px" height="92px" class="app-header__logo" />
+        <AppLogo width="106px" height="92px" class="app-header__logo" @click="returnHome" />
         <h1 v-if="route.meta?.title" class="app-header__text">
         <!-- Получаем заголовок; ? - если заголовка нет, то получим undefined -->
             {{ route.meta.title }}
@@ -22,6 +28,7 @@ const route = useRoute();
     display: flex;
     width: 100%;
     align-items: center;
+    gap: 80px;
 }
 
 .app-header__text {
