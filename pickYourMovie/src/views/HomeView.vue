@@ -1,6 +1,13 @@
 <script setup lang="ts">
 import AppIcon from '@/components/icons/AppIcon.vue';
 import AppLink from '@/components/AppLink.vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+function createSession() {
+  router.push({ name: 'create-session' });
+}
 </script>
 
 <template>
@@ -14,7 +21,7 @@ import AppLink from '@/components/AppLink.vue';
     <AppLink to="about" class="link">
       Подробнее о сервисе ->
     </AppLink>
-    <button type="button" class="button">
+    <button type="button" class="button" @click="createSession">
       Попробовать
     </button>
   </div>
@@ -56,6 +63,7 @@ import AppLink from '@/components/AppLink.vue';
   line-height: normal;
 }
 .button {
+  cursor: pointer;
   border-radius: 60px;
   background: linear-gradient(180deg, #E8505B 0%, #8B3037 100%);
   margin: auto 0 0 0;
