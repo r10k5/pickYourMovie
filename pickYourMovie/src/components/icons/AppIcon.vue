@@ -6,7 +6,7 @@ interface AppIconProps {
 defineProps<AppIconProps>();
 </script>
 <template>
-<svg :width="width" :height="height" viewBox="0 0 862 871" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg :width="width" :height="height" viewBox="0 0 900 800" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M859.186 247.358H705.018V510.442H859.186V247.358Z" fill="#E0E0E0"/>
     <path d="M854.059 247.358H699.891V510.442H854.059V247.358Z" fill="#EBEBEB"/>
     <path d="M847.492 252.694H706.454V505.108H847.492V252.694Z" fill="#FAFAFA"/>

@@ -15,13 +15,15 @@ const router = createRouter({
     {
       path: '/about',
       name: 'about',
-      component: AboutView
+      component: AboutView,
+      meta: { title: 'О нас' }
     },
 
     {
       path: '/create-session',
       name: 'create-session',
-      component: CreateSessionView
+      component: CreateSessionView,
+      meta: { title: 'Создание сессии' }
     }
   ]
 })

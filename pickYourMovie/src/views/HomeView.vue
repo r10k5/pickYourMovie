@@ -39,13 +39,13 @@ function createSession() {
   display: flex;
   flex-direction: column;
   max-width: 764px;
-  padding: 103px 0 76px 64px;
+  padding: 24px 0 12px 64px;
 }
 .text-content, .image {
   width: 100%;
 }
 .image {
-  padding: 68px 64px 12px 0;
+  padding: 0px 64px 12px 0;
 }
 .header {
   color: #EBEBEB;

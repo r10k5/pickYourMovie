@@ -11,14 +11,5 @@ body, #app {
   height: 100vh;
   background-color: #363636;
   display: flex; /**/
-}
-
-@media (max-width: 1360px) {
-  #app {
-    gap: 24px;
-    flex-direction: column-reverse;
-  }
-}
-#app {
-  gap: 166px;
+  flex-direction: column;
 }
