@@ -33,8 +33,8 @@ import AppDiscription from './icons/AppDiscription.vue';
 
 .img{
     margin-top: 16px;
-    height: 340px;
-    width: 340px;
+    height: 400px;
+    width: 300px;
     margin-top: 56px;
 }
 .name{
