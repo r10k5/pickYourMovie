@@ -1,5 +1,13 @@
 <script lang="ts" setup>
+
 import AppChooseVariant from '@/components/AppChooseVariant.vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+function nextToSession() {
+  router.push({ name: 'session' });
+}
 
 </script>
 
@@ -7,6 +15,7 @@ import AppChooseVariant from '@/components/AppChooseVariant.vue';
     <!-- смотреть компонент AppChooseVariant -->
     <div class="create-session">
         <AppChooseVariant />
+        <div class="next" @click="nextToSession"></div>
     </div>
     
 </template>
@@ -14,6 +23,12 @@ import AppChooseVariant from '@/components/AppChooseVariant.vue';
 <style scoped>
 .create-session {
     margin: 228px 0 0 176px;
+}
+
+.next {
+    width: 100px;
+    height: 100px;
+    background-color: aquamarine;
 }
     
 </style>
