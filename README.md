@@ -9,6 +9,8 @@ Backend: Python
 
 СУБД: PostgreSQL
 
+Дизайн: https://www.figma.com/file/OM6Hf7sNile4dmOVkQnMGN/Untitled?type=design&node-id=0%3A1&mode=design&t=945TnjqXAhtkags3-1
+
 ## Как запустить 
 1. Склонируйте репозиторий с помощью команды
    ```sh
