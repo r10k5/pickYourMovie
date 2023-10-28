@@ -5,6 +5,7 @@ import AppMinus from '@/components/icons/AppMinus.vue';
 import AppPlus from '@/components/icons/AppPlus.vue';
 import AppDeleteMember from '@/components/icons/AppDeleteMember.vue';
 import AppCheckMark from '@/components/icons/AppCheckMark.vue';
+import AppLinkAndCodeVue from '@/components/icons/AppLinkAndCode.vue';
 import { useRouter } from 'vue-router';
 
 
@@ -50,6 +51,9 @@ function nextToSession() {
                 <AppCheckMark class="checkMark"> </AppCheckMark>
             </div>
         </div>
+        <div class="linkAndCode">
+            <AppLinkAndCodeVue class="linkTextBox"> Ссылка для подключения </AppLinkAndCodeVue>
+        </div>
     </div>
 </template>
 
@@ -61,6 +65,9 @@ function nextToSession() {
 .create-session {
     margin: 96px 0 0 176px;
     display: flex;
+}
+.linkTextBox{
+    margin: 0 0;
 }
 .confirmAndSave{
     display: flex;
