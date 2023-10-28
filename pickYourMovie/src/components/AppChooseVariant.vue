@@ -4,7 +4,8 @@ import AppStar from '@/components/icons/AppStar.vue';
 
 <template>
     <div class="field"> 
-        <p class="choosing-text"> Категория </p>
+        <p class="choosing-text">
+            <slot></slot> </p>
         <AppStar class="star" width="28px" height="28px"/>
     </div>
 </template>
@@ -12,7 +13,8 @@ import AppStar from '@/components/icons/AppStar.vue';
 <style scoped>
 .field {
     width: 654px;
-    border-radius: 6.25rem;
+    height: 104px;
+    border-radius: 100px;
     border: 5px solid #EBEBEB;
     padding: 28px 48px;
     justify-content: space-between;
