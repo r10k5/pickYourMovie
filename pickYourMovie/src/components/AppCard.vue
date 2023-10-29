@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import AppDiscription from '@/components/icons/AppDiscription.vue';
+import { ref } from 'vue';
 
 interface AppCardProps {
     img: string;
@@ -8,21 +9,44 @@ interface AppCardProps {
 }
 defineProps<AppCardProps>();
 
+const rotateClass = ref('');
+
+const rotateCard = () => {
+    rotateClass.value = 'wrapper-rotate';
+}
+
+const disableRotation = () => {
+    rotateClass.value = '';
+}
+
 </script>
 
 <template>
-<div class="card">
+<div :class="['card', rotateClass]">
     <slot />
     <img :src="img" alt="Изображение съела БД" class="img">
     <div>
         <p class="name">{{ name }}</p>
         <p class="text"> {{ time }}</p>
     </div>
-    <AppDiscription class="app-discription" width="40px" height="40px" />
+    <div class="diacription-wrapper" @mouseenter="rotateCard" @mouseleave="disableRotation">
+        <AppDiscription class="app-discription" width="40px" height="40px" />
+    </div>
+    
 </div>
 </template>
 
 <style scoped>
+.wrapper-rotate {
+    transform: rotateX(180deg);
+
+}
+.diacription-wrapper {
+    width: 100%;
+    margin-top: auto;
+    display: flex;
+    z-index: 2;
+}
 .card {
     border-radius: 1rem;
     border: 1px solid rgba(255, 255, 255, 0.04);
@@ -35,6 +59,8 @@ defineProps<AppCardProps>();
     align-items: center;
     flex-direction: column;
     position: relative;
+
+    transition: .6s transform ease-in-out;
 }
 
 .app-discription{
