@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import AppDiscription from './icons/AppDiscription.vue';
+import AppDiscription from '@/components/icons/AppDiscription.vue';
 </script>
 
 <template>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import AppCopyIcon from './AppCopyIcon.vue';
+import AppCopyIcon from "@/components/icons/AppCopyIcon.vue";
 </script>
 
 <template>

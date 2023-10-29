@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import AppLogo from './icons/AppLogo.vue';
+import AppLogo from '@/components/icons/AppLogo.vue';
 import { useRoute } from 'vue-router';
 import { useRouter } from 'vue-router';
 
