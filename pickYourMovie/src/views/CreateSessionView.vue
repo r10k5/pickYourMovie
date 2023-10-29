@@ -5,7 +5,7 @@ import AppMinus from '@/components/icons/AppMinus.vue';
 import AppPlus from '@/components/icons/AppPlus.vue';
 import AppDeleteMember from '@/components/icons/AppDeleteMember.vue';
 import AppCheckMark from '@/components/icons/AppCheckMark.vue';
-import AppLinkAndCodeVue from '@/components/icons/AppLinkAndCode.vue';
+import AppLinkAndCodeVue from '@/components/AppLinkAndCode.vue';
 import { useRouter } from 'vue-router';
 
 
