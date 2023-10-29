@@ -2,10 +2,18 @@
 import AppCard from '@/components/AppCard.vue';
 import AppUnlike from '@/components/icons/AppUnlike.vue';
 import AppLike from '@/components/icons/AppLike.vue';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+import cards from '@/views/cards.json';
+
 
 const rotateCard = ref('rotate(0deg)');
-const colorCard = ref('transparent')
+const colorCard = ref('transparent');
+
+const cardIndex = ref(0);
+const card = computed(() => cards[cardIndex.value]);
+const cardImg = computed(() => {
+    return new URL(`../assets/images/${card.value.img}`, import.meta.url).href; 
+})
 
 const followMouse = (e: MouseEvent) => {
     const cordX = e.clientX;
@@ -23,10 +31,9 @@ const followMouse = (e: MouseEvent) => {
 </script>
 
 <template>
-
 <div class="container" @mouseover="followMouse">
     <AppUnlike width="120px" height="120px" class="unlike" />
-    <AppCard :style="{ transform: rotateCard }" class="card"> 
+    <AppCard :img="cardImg" :name="card.name" :time="card.time" :style="{ transform: rotateCard }" class="card"> 
         <div class="filter" :style="{ backgroundColor: colorCard }">
 
         </div>

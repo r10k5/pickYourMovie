@@ -1,14 +1,22 @@
 <script setup lang="ts">
 import AppDiscription from '@/components/icons/AppDiscription.vue';
+
+interface AppCardProps {
+    img: string;
+    name: string;
+    time: string;
+}
+defineProps<AppCardProps>();
+
 </script>
 
 <template>
 <div class="card">
     <slot />
-    <img src="../components/icons/test.jpg" alt="Изображение съела БД" class="img">
+    <img :src="img" alt="Изображение съела БД" class="img">
     <div>
-        <p class="name">Name</p>
-        <p class="text"> 5 серий по 25 минут</p>
+        <p class="name">{{ name }}</p>
+        <p class="text"> {{ time }}</p>
     </div>
     <AppDiscription class="app-discription" width="40px" height="40px" />
 </div>

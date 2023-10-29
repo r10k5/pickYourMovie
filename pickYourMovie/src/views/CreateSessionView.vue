@@ -8,7 +8,6 @@ import AppCheckMark from '@/components/icons/AppCheckMark.vue';
 import AppLinkAndCodeVue from '@/components/AppLinkAndCode.vue';
 import { useRouter } from 'vue-router';
 
-
 const router = useRouter();
 
 function nextToSession() {
