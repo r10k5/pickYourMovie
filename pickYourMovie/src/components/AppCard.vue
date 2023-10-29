@@ -4,6 +4,7 @@ import AppDiscription from './icons/AppDiscription.vue';
 
 <template>
 <div class="card">
+    <slot />
     <img src="../components/icons/test.jpg" alt="Изображение съела БД" class="img">
     <div>
         <p class="name">Name</p>
@@ -25,6 +26,7 @@ import AppDiscription from './icons/AppDiscription.vue';
     display: flex;
     align-items: center;
     flex-direction: column;
+    position: relative;
 }
 
 .app-discription{
