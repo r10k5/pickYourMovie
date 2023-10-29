@@ -29,7 +29,7 @@ defineProps<AppCardProps>();
     background: rgba(255, 255, 255, 0.04);
     box-shadow: 0px 1px 0px 0px rgba(255, 255, 255, 0.08) inset;
     width: 540px;
-    height: 800px;
+    height: 92%;
 
     display: flex;
     align-items: center;

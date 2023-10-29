@@ -28,10 +28,22 @@ const followMouse = (e: MouseEvent) => {
     rotateCard.value = 'rotate(-10deg)';
     colorCard.value = 'rgba(232, 80, 91, 0.25)';
 }
+
+const nextCard = (e:MouseEvent) => {
+    const cordX = e.clientX;
+    const widthScreen = window.innerWidth / 2;
+    
+    cardIndex.value++
+    if (cordX > widthScreen) {
+        // счетчик понравившихся
+        return
+    } 
+    // счетчик непонравившихся
+}
 </script>
 
 <template>
-<div class="container" @mouseover="followMouse">
+<div class="container" @mouseover="followMouse" @click="nextCard">
     <AppUnlike width="120px" height="120px" class="unlike" />
     <AppCard :img="cardImg" :name="card.name" :time="card.time" :style="{ transform: rotateCard }" class="card"> 
         <div class="filter" :style="{ backgroundColor: colorCard }">
