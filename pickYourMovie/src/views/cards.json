@@ -2,12 +2,24 @@
     {
         "img": "test.jpg",
         "name": "Паркер",
-        "time": "1000000000 часов"
+        "time": "01:58"
     },
 
     {
         "img": "avatar.jpg",
         "name": "Аватар",
-        "time": "2 ч 42 мин"
+        "time": "2:42"
+    },
+
+    {
+        "img": "barbie.jpg",
+        "name": "Барби",
+        "time": "01:54"
+    },
+
+    {
+        "img": "drive.jpg",
+        "name": "Драйв",
+        "time": "01:40"
     }
 ]

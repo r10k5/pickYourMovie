@@ -33,7 +33,7 @@ const nextCard = (e:MouseEvent) => {
     const cordX = e.clientX;
     const widthScreen = window.innerWidth / 2;
     
-    cardIndex.value++
+    cardIndex.value = (cardIndex.value+1) % cards.length;
     if (cordX > widthScreen) {
         // счетчик понравившихся
         return
