@@ -5,7 +5,8 @@
 ## Стек технологий 
 Frontend: Vue3, TypeScript
 
-Backend: Python
+Backend: Django
+https://github.com/r10k5/PYM-backend
 
 СУБД: PostgreSQL
 
