@@ -44,4 +44,13 @@ function returnHome() {
     flex-shrink: 0;
     filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.30));
 }
+
+@media screen and (max-width: 900px) {
+    .app-header{
+        padding: 8px 0 0 8px ;
+    }
+    .app-header__logo{
+        width: 60%;
+    }
+}
 </style>

@@ -6,7 +6,7 @@ interface AppCardProps {
     img: string;
     name: string;
     time: string;
-    genres: any;
+    genres: string;
 }
 defineProps<AppCardProps>();
 
@@ -55,7 +55,7 @@ const disableRotation = () => {
     background: rgba(255, 255, 255, 0.04);
     box-shadow: 0px 1px 0px 0px rgba(255, 255, 255, 0.08) inset;
     width: 540px;
-    height: 92%;
+    height: 740px;
 
     display: flex;
     align-items: center;
@@ -79,11 +79,31 @@ const disableRotation = () => {
     color: #EBEBEB;
     font-size: 28px;
     text-align: center;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 400px;
 }
 .text , .genres{
     color: #c9c7c7;
     font-size: 20px;
     text-align: center;
     margin: 0;
+}
+
+@media screen and (max-width: 900px){
+    .card {
+        width: 90%;
+        height: 80%;
+    }
+    .img {
+        width: 80%;
+        height: 60%;
+    }
+    .text , .genres, .name {
+        font-size: 12px;
+    }
+
 }
 </style>

@@ -4,12 +4,11 @@ import AppUnlike from '@/components/icons/AppUnlike.vue';
 import AppLike from '@/components/icons/AppLike.vue';
 import { ref, computed } from 'vue';
 import cards from '@/views/cards.json';
-
-let like:boolean = true; 
+import SelectionHistory, { type HistoryElem } from '@/components/SelectionHistory.vue';
 
 const rotateCard = ref('rotate(0deg)');
 const colorCard = ref('transparent');
-const colorNotify = ref('color');
+const history = ref<HistoryElem[]>([]);
 
 const cardIndex = ref(0);
 const card = computed(() => cards[cardIndex.value]);
@@ -34,17 +33,15 @@ const followMouse = (e: MouseEvent) => {
 const nextCard = (e:MouseEvent) => {
     const cordX = e.clientX;
     const widthScreen = window.innerWidth / 2;
-    
+    const card = cards[cardIndex.value]
     cardIndex.value = (cardIndex.value+1) % cards.length;
-    if (cordX > widthScreen) {
-        // счетчик понравившихся
-        like = true;
-        colorNotify.value = '#7ED09E'
 
+    if (cordX > widthScreen) {
+        history.value.push({ card, isLiked: true })
+        // счетчик понравившихся
         return
     } 
-    like = false;
-    colorNotify.value = '#E8505B'
+    history.value.push({ card, isLiked: false })
     // счетчик непонравившихся
 }
 
@@ -52,23 +49,26 @@ const nextCard = (e:MouseEvent) => {
 
 <template>
 <div class="container" @mouseover="followMouse" @click="nextCard">
-    <AppUnlike width="120px" height="120px" class="unlike-icon" />
-    <AppCard :img="cardImg" :name="card.name" :time="card.time" :genres="card.genres" :style="{ transform: rotateCard }" class="card"> 
-        <div class="filter-color" :style="{ backgroundColor: colorCard }" />
-    </AppCard>
-    <AppLike width="120px" height="120px" class="unlike-icon" />
-    <div>
-        <p class="selected-movie" :style="{ color: colorNotify }" > {{ card.name}} ( {{ card.genres }} ) - {{ card.time }} </p>
+    <div class="div-card"> 
+        <AppUnlike width="120px" height="120px" class="unlike-icon" />
+        <AppCard :img="cardImg" :name="card.name" :time="card.time" :genres="card.genres" :style="{ transform: rotateCard }" class="card"> 
+            <div class="filter-color" :style="{ backgroundColor: colorCard }" />
+        </AppCard>
+        <AppLike width="120px" height="120px" class="unlike-icon" />
     </div>
+    <SelectionHistory :history="history" />
 </div>
 
 </template>
 
 <style scoped>
-
-.selected-movie {
-    color: brown;
-    position: absolute;
+.div-card {
+    height: 100%;
+    width: 100%;
+    display: flex; 
+    justify-content: center;
+    gap: 80px;
+    flex-grow: 1;
 }
 .filter-color {
     position: absolute;
@@ -81,18 +81,25 @@ const nextCard = (e:MouseEvent) => {
     transition: .6s transform ease-in-out;
 }
 .container{
-    height: 100%;
+    display: flex;
     width: 100%;
-    display: flex; 
-    justify-content: center;
-    gap: 80px;
 }
 .unlike-icon {
-    margin-top: 352px;
+    margin-top: 320px;
 }
 
 .unlike:hover {
     animation: rotate;
     animation-iteration-count: infinite;
+}
+
+@media screen and (max-width: 900px) {
+    .container {
+        flex-direction: column;
+    }
+    .div-card {
+        gap: 60px;
+    }
+
 }
 </style>

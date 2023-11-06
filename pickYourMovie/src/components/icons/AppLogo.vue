@@ -1,4 +1,5 @@
 <script setup lang="ts">
+
 interface AppLogoProps {
     width: string;
     height: string;
