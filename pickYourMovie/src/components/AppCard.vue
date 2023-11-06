@@ -6,6 +6,7 @@ interface AppCardProps {
     img: string;
     name: string;
     time: string;
+    genres: any;
 }
 defineProps<AppCardProps>();
 
@@ -28,6 +29,7 @@ const disableRotation = () => {
     <div>
         <p class="name">{{ name }}</p>
         <p class="text"> {{ time }}</p>
+        <p class="genres"> {{ genres }}</p>
     </div>
     <div class="diacription-wrapper" @mouseenter="rotateCard" @mouseleave="disableRotation">
         <AppDiscription class="app-discription" width="40px" height="40px" />
@@ -78,7 +80,7 @@ const disableRotation = () => {
     font-size: 28px;
     text-align: center;
 }
-.text{
+.text , .genres{
     color: #c9c7c7;
     font-size: 20px;
     text-align: center;

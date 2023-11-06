@@ -2,3 +2,7 @@
 
     
 </template>
+
+<style scoped>
+
+</style>
