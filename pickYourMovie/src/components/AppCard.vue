@@ -8,6 +8,7 @@ interface AppCardProps {
     time: string;
     genres: string;
 }
+
 defineProps<AppCardProps>();
 
 const rotateClass = ref('');

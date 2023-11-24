@@ -3,18 +3,19 @@ import AppCard from '@/components/AppCard.vue';
 import AppUnlike from '@/components/icons/AppUnlike.vue';
 import AppLike from '@/components/icons/AppLike.vue';
 import { ref, computed } from 'vue';
-import cards from '@/views/cards.json';
+import { useCardsStore } from '@/stores/cards';
 import SelectionHistory, { type HistoryElem } from '@/components/SelectionHistory.vue';
+
+const cardsStore = useCardsStore();
+cardsStore.getCards();
 
 const rotateCard = ref('rotate(0deg)');
 const colorCard = ref('transparent');
 const history = ref<HistoryElem[]>([]);
 
 const cardIndex = ref(0);
-const card = computed(() => cards[cardIndex.value]);
-const cardImg = computed(() => {
-    return new URL(`../assets/images/${card.value.img}`, import.meta.url).href; 
-})
+const card = computed(() => cardsStore.cards[cardIndex.value]);
+console.log(cardsStore.cards)
 
 const followMouse = (e: MouseEvent) => {
     const cordX = e.clientX;
@@ -33,8 +34,8 @@ const followMouse = (e: MouseEvent) => {
 const nextCard = (e:MouseEvent) => {
     const cordX = e.clientX;
     const widthScreen = window.innerWidth / 2;
-    const card = cards[cardIndex.value]
-    cardIndex.value = (cardIndex.value+1) % cards.length;
+    const card = cardsStore.cards[cardIndex.value];
+    cardIndex.value = cardIndex.value+1;
 
     if (cordX > widthScreen) {
         history.value.push({ card, isLiked: true })
@@ -48,10 +49,10 @@ const nextCard = (e:MouseEvent) => {
 </script>
 
 <template>
-<div class="container" @mouseover="followMouse" @click="nextCard">
+<div v-if="card" class="container" @mouseover="followMouse" @click="nextCard">
     <div class="div-card"> 
         <AppUnlike width="120px" height="120px" class="unlike-icon" />
-        <AppCard :img="cardImg" :name="card.name" :time="card.time" :genres="card.genres" :style="{ transform: rotateCard }" class="card"> 
+        <AppCard :img="card.fields.filename" :name="card.fields.name" time="0 min" :genres="card.fields.genres" :style="{ transform: rotateCard }" class="card"> 
             <div class="filter-color" :style="{ backgroundColor: colorCard }" />
         </AppCard>
         <AppLike width="120px" height="120px" class="unlike-icon" />
