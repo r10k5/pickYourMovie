@@ -8,15 +8,12 @@ interface AppCardProps {
     time: string;
     genres: string;
 }
-
 defineProps<AppCardProps>();
 
 const rotateClass = ref('');
-
 const rotateCard = () => {
     rotateClass.value = 'wrapper-rotate';
 }
-
 const disableRotation = () => {
     rotateClass.value = '';
 }
@@ -27,8 +24,8 @@ const disableRotation = () => {
 <div :class="['card', rotateClass]">
     <slot />
     <img :src="img" alt="Изображение съела БД" class="img">
-    <div>
-        <p class="name">{{ name }}</p>
+    <div class="info-container">
+        <p class="name" @keyframe="marquee">{{ name }}</p>
         <p class="text"> {{ time }}</p>
         <p class="genres"> {{ genres }}</p>
     </div>
@@ -40,9 +37,13 @@ const disableRotation = () => {
 </template>
 
 <style scoped>
+.info-container {
+    padding: 0 32px;
+    flex-shrink: 0;
+    overflow: hidden;
+}
 .wrapper-rotate {
     transform: rotateX(180deg);
-
 }
 .diacription-wrapper {
     width: 100%;
@@ -85,12 +86,23 @@ const disableRotation = () => {
     text-overflow: ellipsis;
     white-space: nowrap;
     max-width: 400px;
+    animation: marquee 5s linear infinite; 
+    margin: 0 12px;
 }
 .text , .genres{
     color: #c9c7c7;
     font-size: 20px;
     text-align: center;
     margin: 0;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(100%); 
+  }
+  100% {
+    transform: translateX(-100%); 
+  }
 }
 
 @media screen and (max-width: 900px){

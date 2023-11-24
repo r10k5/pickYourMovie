@@ -18,7 +18,7 @@ defineProps<SelectionHistoryProps>();
 
 <template>
     <div class="div-selected">
-        <p v-for="elem in history" class="selected-movie" :style="{ color: elem.isLiked ? '#7ED09E' : '#E8505B' }" > {{ elem.card.name }} ( {{ elem.card.genres }} ) - {{ elem.card.time }} </p>
+        <p v-for="elem in history" class="selected-movie" :style="{ color: elem.isLiked ? '#7ED09E' : '#E8505B' }" > {{ elem.card.fields.name }} ( {{ elem.card.fields.genres }} ) - {{ elem.card.time }} </p>
     </div>
 </template>
 

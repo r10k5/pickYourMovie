@@ -52,17 +52,26 @@ const nextCard = (e:MouseEvent) => {
 <div v-if="card" class="container" @mouseover="followMouse" @click="nextCard">
     <div class="div-card"> 
         <AppUnlike width="120px" height="120px" class="unlike-icon" />
-        <AppCard :img="card.fields.filename" :name="card.fields.name" time="0 min" :genres="card.fields.genres" :style="{ transform: rotateCard }" class="card"> 
+        <AppCard :img="card.fields.filename" :name="card.fields.name" time="20 min" :genres="card.fields.genres" :style="{ transform: rotateCard }" class="card"> 
             <div class="filter-color" :style="{ backgroundColor: colorCard }" />
         </AppCard>
         <AppLike width="120px" height="120px" class="unlike-icon" />
     </div>
-    <SelectionHistory :history="history" />
+    <SelectionHistory :history="history" class="selection-history" />
 </div>
 
 </template>
 
 <style scoped>
+.selection-history {
+    margin-left: 32px;
+    margin-top: 16px;
+    height: 760px;
+    background-color: rgba(114, 114, 114, 0.192);
+    overflow: hidden;
+
+    overflow-y: auto
+}
 .div-card {
     height: 100%;
     width: 100%;
