@@ -1,15 +1,16 @@
 <script setup lang="ts">
 import AppDiscription from '@/components/icons/AppDiscription.vue';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 interface AppCardProps {
     img: string;
     name: string;
     time: string;
-    genres: string;
+    genres: string[];
 }
 defineProps<AppCardProps>();
 
+const nameRef = ref<HTMLElement | null>(null);
 const rotateClass = ref('');
 const rotateCard = () => {
     rotateClass.value = 'wrapper-rotate';
@@ -17,6 +18,16 @@ const rotateCard = () => {
 const disableRotation = () => {
     rotateClass.value = '';
 }
+const isBig = computed(() => {
+    if (nameRef.value) {
+        console.log(nameRef.value.clientWidth)
+        console.log(nameRef.value.scrollWidth)
+
+        return nameRef.value.scrollWidth > nameRef.value.clientWidth
+    }
+
+    return false
+})
 
 </script>
 
@@ -25,9 +36,11 @@ const disableRotation = () => {
     <slot />
     <img :src="img" alt="Изображение съела БД" class="img">
     <div class="info-container">
-        <p class="name" @keyframe="marquee">{{ name }}</p>
+        <p ref="nameRef" class="name" :key="name">
+            <span :class="{ 'name-marquee': isBig }">{{ name }}</span>
+        </p>
         <p class="text"> {{ time }}</p>
-        <p class="genres"> {{ genres }}</p>
+        <p class="genres"> {{ genres.join(', ') }}</p>
     </div>
     <div class="diacription-wrapper" @mouseenter="rotateCard" @mouseleave="disableRotation">
         <AppDiscription class="app-discription" width="40px" height="40px" />
@@ -38,7 +51,6 @@ const disableRotation = () => {
 
 <style scoped>
 .info-container {
-    padding: 0 32px;
     flex-shrink: 0;
     overflow: hidden;
 }
@@ -77,23 +89,27 @@ const disableRotation = () => {
     width: 300px;
     margin-top: 56px;
 }
-.name{
+.name {
     color: #EBEBEB;
     font-size: 28px;
-    text-align: center;
 
     overflow: hidden;
-    text-overflow: ellipsis;
     white-space: nowrap;
-    max-width: 400px;
-    animation: marquee 5s linear infinite; 
-    margin: 0 12px;
+    width: 320px;
+    margin: 0 auto;
+    text-align: center;
+}
+.name-marquee {
+    text-align: center;
+    display: block;
+    animation: marquee 8s linear infinite; 
 }
 .text , .genres{
     color: #c9c7c7;
     font-size: 20px;
     text-align: center;
     margin: 0;
+    padding: 0 8px;
 }
 
 @keyframes marquee {
