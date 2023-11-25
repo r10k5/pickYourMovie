@@ -5,7 +5,7 @@ import { computed, ref } from 'vue';
 interface AppCardProps {
     img: string;
     name: string;
-    time: string;
+    time: number;
     genres: string[];
 }
 defineProps<AppCardProps>();
@@ -39,7 +39,7 @@ const isBig = computed(() => {
         <p ref="nameRef" class="name" :key="name">
             <span :class="{ 'name-marquee': isBig }">{{ name }}</span>
         </p>
-        <p class="text"> {{ time }}</p>
+        <p v-if="time > 0" class="text"> {{ time }} минут</p>
         <p class="genres"> {{ genres.join(', ') }}</p>
     </div>
     <div class="diacription-wrapper" @mouseenter="rotateCard" @mouseleave="disableRotation">
@@ -102,7 +102,7 @@ const isBig = computed(() => {
 .name-marquee {
     text-align: center;
     display: block;
-    animation: marquee 8s linear infinite; 
+    animation: marquee 6s linear infinite; 
 }
 .text , .genres{
     color: #c9c7c7;
