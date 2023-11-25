@@ -22,7 +22,7 @@ export const types = [
     },
     {
         id: 5, 
-        name: 'мультвериалы',
+        name: 'мультcериалы',
         value: 'animated-series'
     }
 ]

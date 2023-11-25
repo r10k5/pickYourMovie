@@ -37,8 +37,8 @@ const emit = defineEmits<AppChooseVariantEmits>();
 .select-variant {
     background-color: transparent;
     color:#EBEBEB;
-    width: 260px;
-    font-size: 20pt;
+    width: 280px;
+    font-size: 22pt;
     border: none;
 }
 .field {
