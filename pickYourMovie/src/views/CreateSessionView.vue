@@ -83,10 +83,10 @@ function changeGenre(value: string) {
 </template>
 
 <style scoped>
- /* .session {
+  .session {
    height: 100%;
    width: 100%;
-} */
+} 
 .create-session {
     margin: 96px 0 0 176px;
     display: flex;
