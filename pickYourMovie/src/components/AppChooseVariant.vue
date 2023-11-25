@@ -4,13 +4,26 @@ import AppStar from '@/components/icons/AppStar.vue';
 
 <template>
     <div class="field"> 
-        <p class="choosing-text">
-            <slot></slot> </p>
+        <div class="choosing-text">
+            <slot></slot> 
+
+            <select class="select-variant"> 
+                <option value="Pen">Pen</option>
+            </select>  
+
+        </div>
         <AppStar class="star" width="28px" height="28px"/>
     </div>
 </template>
 
 <style scoped>
+.select-variant {
+    background-color: transparent;
+    color:#EBEBEB;
+    width: 260px;
+    font-size: 16pt;
+    border: none;
+}
 .field {
     width: 654px;
     height: 104px;

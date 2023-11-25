@@ -20,7 +20,9 @@ function nextToSession() {
     <!-- смотреть компонент AppChooseVariant -->
     <div class="session">
         <div class="create-session">
-            <AppChooseVariant class="category"> Категория </AppChooseVariant>
+            <AppChooseVariant class="category"> 
+                Категория:  
+            </AppChooseVariant>
             <AppChooseVariant class="genre"> Жанр </AppChooseVariant>
         </div>
         <p class="warning">
