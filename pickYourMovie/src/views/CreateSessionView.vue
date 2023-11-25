@@ -7,11 +7,31 @@ import AppDeleteMember from '@/components/icons/AppDeleteMember.vue';
 import AppCheckMark from '@/components/icons/AppCheckMark.vue';
 import AppLinkAndCodeVue from '@/components/AppLinkAndCode.vue';
 import { useRouter } from 'vue-router';
+import { genres } from '@/scripts/genres';
+import { types } from '@/scripts/types';
+import { ref } from 'vue';
 
 const router = useRouter();
 
 function nextToSession() {
   router.push({ name: 'session' });
+}
+
+const currentType = ref(1);
+const currentGenre = ref(1);
+
+function changeType(value: string) {
+    const choosenType = types.find((item) => item.value === value) 
+    if (choosenType) {
+        currentType.value = choosenType.id;
+    }
+}
+
+function changeGenre(value: string) {
+    const choosenGenre = genres.find((item) => item.name === value) 
+    if (choosenGenre) {
+        currentGenre.value = choosenGenre.id;
+    }
 }
 
 </script>
@@ -20,20 +40,22 @@ function nextToSession() {
     <!-- смотреть компонент AppChooseVariant -->
     <div class="session">
         <div class="create-session">
-            <AppChooseVariant class="category"> 
+            <AppChooseVariant :current-id="currentType" :list="types" class="category" @choose="changeType"> 
                 Категория:  
             </AppChooseVariant>
-            <AppChooseVariant class="genre"> Жанр </AppChooseVariant>
+            <AppChooseVariant :current-id="currentGenre" :list="genres" class="genre" @choose="changeGenre"> 
+                Жанр: 
+            </AppChooseVariant>
         </div>
         <p class="warning">
             Ссылка для подключения и персональный код команды появится после заполнения всех полей
         </p>
         <div class= "members">
-            <AppMinus width="56" height="56" class="minus"> </AppMinus>
+            <AppMinus width="56" height="56" class="minus" />
             <p class="countMembers">
                 2
             </p>
-            <AppPlus width="56" height="56" class="plus"> </AppPlus>
+            <AppPlus width="56" height="56" class="plus" />
             <div class="textBox"> 
                 <p class="membersList">
                     Список участников
@@ -41,7 +63,7 @@ function nextToSession() {
             </div>
         </div>
         <div class="deleteMember">
-            <AppDeleteMember width="78" height="50" class="deleteMemberButton"> </AppDeleteMember>
+            <AppDeleteMember width="78" height="50" class="deleteMemberButton" />
             <p class="excludeText">
                 Исключить
             </p>
@@ -49,11 +71,13 @@ function nextToSession() {
                 <p class="confirm">
                     Подтверждаю
                 </p>
-                <AppCheckMark width="40" height="47" class="checkMark"> </AppCheckMark>
+                <AppCheckMark width="40" height="47" class="checkMark" />
             </div>
         </div>
         <div class="linkAndCode">
-            <AppLinkAndCodeVue class="linkTextBox"> Ссылка для подключения </AppLinkAndCodeVue>
+            <AppLinkAndCodeVue class="linkTextBox"> 
+                Ссылка для подключения 
+            </AppLinkAndCodeVue>
         </div>
     </div>
 </template>

@@ -1,16 +1,33 @@
 <script setup lang="ts">
 import AppStar from '@/components/icons/AppStar.vue';
+import type { HtmlHTMLAttributes } from 'vue';
+
+// Атрибуты компонента
+export interface AppChooseVariantProps {
+    list: {
+        id: number;
+        name: string;
+        value?: string;
+    }[],
+    currentId: number
+}
+defineProps<AppChooseVariantProps>();
+
+// Событие, который генерирует компонент
+export interface AppChooseVariantEmits {
+    (e: 'choose', name: string): void;
+}
+const emit = defineEmits<AppChooseVariantEmits>();
+
 </script>
 
 <template>
     <div class="field"> 
         <div class="choosing-text">
             <slot></slot> 
-
-            <select class="select-variant"> 
-                <option value="Pen">Pen</option>
+            <select class="select-variant" @change="emit('choose', ($event.target as HTMLSelectElement).value)"> 
+                <option v-for="item in list" :key="item.id" :value="item.value ?? item.name" :selected="item.id === currentId">{{ item.name }}</option>
             </select>  
-
         </div>
         <AppStar class="star" width="28px" height="28px"/>
     </div>
@@ -21,7 +38,7 @@ import AppStar from '@/components/icons/AppStar.vue';
     background-color: transparent;
     color:#EBEBEB;
     width: 260px;
-    font-size: 16pt;
+    font-size: 20pt;
     border: none;
 }
 .field {
