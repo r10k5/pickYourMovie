@@ -5,7 +5,7 @@ import { computed, ref } from 'vue';
 interface AppCardProps {
     img: string;
     name: string;
-    time: number;
+    duration_all: number;
     genres: string[];
 }
 defineProps<AppCardProps>();
@@ -39,7 +39,7 @@ const isBig = computed(() => {
         <p ref="nameRef" class="name" :key="name">
             <span :class="{ 'name-marquee': isBig }">{{ name }}</span>
         </p>
-        <p v-if="time > 0" class="text"> {{ time }} минут</p>
+        <p v-if="duration_all > 0" class="text"> {{ duration_all }} минут</p>
         <p class="genres"> {{ genres.join(', ') }}</p>
     </div>
     <div class="diacription-wrapper" @mouseenter="rotateCard" @mouseleave="disableRotation">

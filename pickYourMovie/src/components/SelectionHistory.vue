@@ -1,11 +1,9 @@
 <script lang="ts" setup>
+import type { Card } from '@/stores/cards';
+
 
 export type HistoryElem = {
-    card: {
-        name: string,
-        genres: string[],
-        time: string,
-    },
+    card: Card,
     isLiked: boolean,
 }
 
@@ -18,7 +16,9 @@ defineProps<SelectionHistoryProps>();
 
 <template>
     <div class="div-selected">
-        <p v-for="elem in history" class="selected-movie" :style="{ color: elem.isLiked ? '#7ED09E' : '#E8505B' }" > {{ elem.card.name }} ({{ elem.card.genres.join(', ') }}) - {{ elem.card.time }} </p>
+        <p v-for="elem in history" class="selected-movie" :style="{ color: elem.isLiked ? '#7ED09E' : '#E8505B' }" >
+            {{ elem.card.name }} ({{ elem.card.genres.join(', ') }}) - {{ elem.card.duration_all }}
+        </p>
     </div>
 </template>
 

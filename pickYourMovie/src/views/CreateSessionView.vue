@@ -27,11 +27,11 @@ function nextToSession() {
             Ссылка для подключения и персональный код команды появится после заполнения всех полей
         </p>
         <div class= "members">
-            <AppMinus class="minus"> </AppMinus>
+            <AppMinus width="56" height="56" class="minus"> </AppMinus>
             <p class="countMembers">
                 2
             </p>
-            <AppPlus class="plus"> </AppPlus>
+            <AppPlus width="56" height="56" class="plus"> </AppPlus>
             <div class="textBox"> 
                 <p class="membersList">
                     Список участников
@@ -39,7 +39,7 @@ function nextToSession() {
             </div>
         </div>
         <div class="deleteMember">
-            <AppDeleteMember class="deleteMemberButton"> </AppDeleteMember>
+            <AppDeleteMember width="78" height="50" class="deleteMemberButton"> </AppDeleteMember>
             <p class="excludeText">
                 Исключить
             </p>
@@ -47,7 +47,7 @@ function nextToSession() {
                 <p class="confirm">
                     Подтверждаю
                 </p>
-                <AppCheckMark class="checkMark"> </AppCheckMark>
+                <AppCheckMark width="40" height="47" class="checkMark"> </AppCheckMark>
             </div>
         </div>
         <div class="linkAndCode">

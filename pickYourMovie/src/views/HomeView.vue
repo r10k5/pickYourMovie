@@ -18,7 +18,7 @@ function createSession() {
     <p class="description">
       Сервис подберет наилучшее решение для семьи и компании!
     </p>
-    <AppLink to="about" class="link">
+    <AppLink link="about" class="link">
       Подробнее о сервисе ->
     </AppLink>
     <button type="button" class="button" @click="createSession">

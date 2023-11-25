@@ -52,7 +52,7 @@ const nextCard = (e:MouseEvent) => {
 <div v-if="card" class="container" @mouseover="followMouse" @click="nextCard">
     <div class="div-card"> 
         <AppUnlike width="120px" height="120px" class="unlike-icon" />
-        <AppCard :img="card.filename" :name="card.name" :time="card.duration_all" :genres="card.genres" :style="{ transform: rotateCard }" class="card"> 
+        <AppCard :img="card.filename" :name="card.name" :duration_all="card.duration_all" :genres="card.genres" :style="{ transform: rotateCard }" class="card"> 
             <div class="filter-color" :style="{ backgroundColor: colorCard }" />
         </AppCard>
         <AppLike width="120px" height="120px" class="unlike-icon" />
