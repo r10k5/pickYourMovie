@@ -6,6 +6,7 @@ import { ref, computed } from 'vue';
 import { useCardsStore } from '@/stores/cards';
 import SelectionHistory, { type HistoryElem } from '@/components/SelectionHistory.vue';
 
+
 const cardsStore = useCardsStore();
 cardsStore.getCards();
 

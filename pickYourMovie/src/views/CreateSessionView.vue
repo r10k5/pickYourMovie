@@ -10,6 +10,7 @@ import { useRouter } from 'vue-router';
 import { genres } from '@/scripts/genres';
 import { types } from '@/scripts/types';
 import { ref } from 'vue';
+import AppMyModal from '@/components/AppMyModal.vue';
 
 const router = useRouter();
 
@@ -39,6 +40,7 @@ function changeGenre(value: string) {
 <template>
     <!-- смотреть компонент AppChooseVariant -->
     <div class="session">
+        <AppMyModal/>
         <div class="create-session">
             <AppChooseVariant :current-id="currentType" :list="types" class="category" @choose="changeType"> 
                 Категория:  
