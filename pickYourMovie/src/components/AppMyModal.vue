@@ -2,6 +2,10 @@
 import AppLogo from './icons/AppLogo.vue';
 import AppCloseIcon from './AppCloseIcon.vue';
 
+export interface AppMyModalProps {
+    hasClose?: boolean;
+}
+withDefaults(defineProps<AppMyModalProps>(), { hasClose: true })
 </script>
 
 <template>
@@ -9,7 +13,10 @@ import AppCloseIcon from './AppCloseIcon.vue';
         <div class="app-my-modal-bg">
             <div class="app-my-modal">
                 <AppLogo width="96" height="80" class="app-modal-logo" />
-                <AppCloseIcon width="40" height="40" class="app-modal-close"/>
+                <AppCloseIcon v-if="hasClose" width="40" height="40" class="app-modal-close" />
+                <div >
+                    <slot />
+                </div>
             </div>
         </div>
     </Teleport>
@@ -29,8 +36,10 @@ import AppCloseIcon from './AppCloseIcon.vue';
 }
 
 .app-my-modal {
-    width: 840px;
-    height: 480px;
+    min-width: 840px;
+    min-height: 480px;
+    width: 45%;
+    height: 45%;
     background-color: #363636;
     border-radius: 1rem;
     border: 1px solid rgba(255, 255, 255, 0.04);

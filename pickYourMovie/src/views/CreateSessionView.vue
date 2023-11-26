@@ -12,6 +12,7 @@ import { types } from '@/scripts/types';
 import { ref } from 'vue';
 import AppMyModal from '@/components/AppMyModal.vue';
 import AppDotsElastic from '@/components/AppDotsElastic.vue';
+import { useUserStore } from '@/stores/user';
 
 const router = useRouter();
 
@@ -36,12 +37,34 @@ function changeGenre(value: string) {
     }
 }
 
+const isModalOpen = ref(true);
+const userName = ref('');
+const userStore = useUserStore();
+
+function saveUser() {
+    if (userName.value.length > 3) {
+        userStore.newUser(userName.value);
+        isModalOpen.value = false;
+        return;
+    }
+    alert('Имя должно быть больше двух символов');
+}
 </script>
 
 <template>
     <!-- смотреть компонент AppChooseVariant -->
     <div class="session">
-        <AppMyModal/>
+        <AppMyModal v-if="isModalOpen" :has-close="false">
+            <div class="modal-container">
+
+                <p class="modal-header-text"> Вы собираетесь присоединиться к сессии! Как к Вам обращаться? </p>
+                <p class="modal-text">Имя будет отображаться для участников сессии.</p>
+                <input v-model="userName" type="text" class="modal-input"/>
+            </div>
+
+            <button class="modal-button" @click="saveUser">GO</button>
+        </AppMyModal>
+
         <div class="create-session">
             <AppChooseVariant :current-id="currentType" :list="types" class="category" @choose="changeType"> 
                 Категория:  
@@ -50,21 +73,27 @@ function changeGenre(value: string) {
                 Жанр: 
             </AppChooseVariant>
         </div>
+
         <p class="warning">
             Ссылка для подключения и персональный код команды появится после заполнения всех полей
         </p>
+
         <div class= "members">
             <AppMinus width="56" height="56" class="minus" />
+
             <p class="countMembers">
                 2
             </p>
+
             <AppPlus width="56" height="56" class="plus" />
+
             <div class="textBox"> 
                 <p class="membersList">
                     Список участников
                 </p>
             </div>
         </div>
+
         <div class="deleteMember">
             <AppDeleteMember width="78" height="50" class="deleteMemberButton" />
             <p class="excludeText">
@@ -77,11 +106,13 @@ function changeGenre(value: string) {
                 <AppCheckMark width="40" height="47" class="checkMark" />
             </div>
         </div>
+
         <div class="linkAndCode">
             <AppLinkAndCodeVue class="linkTextBox"> 
                 Ссылка для подключения 
             </AppLinkAndCodeVue>
         </div>
+
         <div class="membersCounter">
             <p class="membersTitle">
                 Участники
@@ -93,11 +124,63 @@ function changeGenre(value: string) {
             <div class="goButton" @click="nextToSession">
                 <p class="goTitle">Go</p>
             </div>
+
         </div>
     </div>
 </template>
 
 <style scoped>
+.modal-button {
+    min-height: 60px;
+    min-width: 120px;
+    flex-shrink: 0;
+    background-color: #E44F5A;
+    border-radius: 30px;
+    border: none;
+    box-shadow: 0 4px 4px 0 #21171770 ;
+
+    font-size: 32px;
+    font-weight: 600;
+    color: #EBEBEB;
+
+    position: absolute;
+    bottom: 32px;
+    right: 16px;
+}
+.modal-input {
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: #1F1F1F;
+    width: 100%;
+    border: none;
+    min-width: 552px;
+    min-height: 48px;
+
+    color: #7ED09E;
+    padding: 12px;
+    font-size: 24px;
+    font-style: italic;
+    font-weight: 200;
+    margin-top: 36px;
+}
+.modal-container {
+    min-width: 552px;
+    min-height: 144px;
+    width: 66%;
+    margin-top: 64px;
+    margin-left: 76px;
+}
+.modal-text {
+    color: #c5c5c5;
+    font-size: 16px;
+    font-weight: 400;
+    margin-top: 24p;
+}
+.modal-header-text {
+    color: #EBEBEB;
+    font-size: 40px;
+    font-weight: 700;
+}
   .session {
    height: 100%;
    width: 100%;
