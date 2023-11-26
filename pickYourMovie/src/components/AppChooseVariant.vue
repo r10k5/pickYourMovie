@@ -40,6 +40,7 @@ const emit = defineEmits<AppChooseVariantEmits>();
     width: 280px;
     font-size: 22pt;
     border: none;
+    font-family: 'Inter';
 }
 .field {
     width: 654px;

@@ -11,6 +11,7 @@ import { genres } from '@/scripts/genres';
 import { types } from '@/scripts/types';
 import { ref } from 'vue';
 import AppMyModal from '@/components/AppMyModal.vue';
+import AppDotsElastic from '@/components/AppDotsElastic.vue';
 
 const router = useRouter();
 
@@ -81,6 +82,18 @@ function changeGenre(value: string) {
                 Ссылка для подключения 
             </AppLinkAndCodeVue>
         </div>
+        <div class="membersCounter">
+            <p class="membersTitle">
+                Участники
+            </p>
+            <p class="joinedMembers">
+                4/5
+            </p>
+            <AppDotsElastic class="dotsElastic"/>
+            <div class="goButton" @click="nextToSession">
+                <p class="goTitle">Go</p>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -94,7 +107,7 @@ function changeGenre(value: string) {
     display: flex;
 }
 .linkTextBox{
-    margin: 0 0;
+    margin: 32px 176px;
 }
 .confirmAndSave{
     display: flex;
@@ -103,6 +116,8 @@ function changeGenre(value: string) {
     width: 208px;
     height: 48px;
     background-color: rgba(126, 208, 158, 1);
+    cursor: pointer;
+    box-shadow: 0px 4px 4px 0px rgba(33, 23, 23, 0.50);
 }
 .confirm{
     color: #363636;
@@ -145,6 +160,45 @@ function changeGenre(value: string) {
     display: flex;
     margin: 64px 0 0 200px;
 }
+.membersCounter {
+    display: flex;
+    margin: 32px 696px;
+}
+.membersTitle {
+    flex-direction: column;
+    color: #EBEBEB;
+    font-family: 'Inter';
+    font-size: 36px;
+    margin: 17px 0;
+}
+.joinedMembers {
+    flex-direction: column;
+    color: #9B9B9B;
+    font-family: 'Inter';
+    font-size: 64px;
+    margin: 0 0 0 40px;
+}
+.dotsElastic {
+    margin: 34px 64px;
+
+}
+.goButton {
+    width: 240px;
+    height: 104px;
+    background: linear-gradient(180deg, #E8505B 0%, #8B3037 100%);
+    margin:0 352px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 600;
+    box-shadow: 0px 4px 4px 0px rgba(33, 23, 23, 0.50);
+}
+.goTitle {
+    color: #EBEBEB;
+    font-family: 'Inter';
+    font-size: 64px;
+    margin: 13px 75px;
+    
+}
 .countMembers {
     color: #EBEBEB;
     font-family: 'Inter';
@@ -172,5 +226,6 @@ function changeGenre(value: string) {
     width: 56px;
     margin: 8px 0;
 }
+
     
 </style>
