@@ -3,6 +3,8 @@ import HomeView from '../views/HomeView.vue'
 import AboutView from '../views/AboutView.vue'
 import CreateSessionView from '@/views/CreateSessionView.vue'
 import SessionView from '@/views/SessionView.vue'
+import MatchView from '@/views/MatchView.vue'
+import ResultsView from '@/views/ResultsView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -31,7 +33,19 @@ const router = createRouter({
       path: '/session',
       name: 'session',
       component: SessionView
-    }
+    },
+
+    {
+      path: '/match',
+      name: 'match',
+      component: MatchView
+    },
+
+    {
+      path: '/results',
+      name: 'results',
+      component: ResultsView
+    },
 
   ]
 })

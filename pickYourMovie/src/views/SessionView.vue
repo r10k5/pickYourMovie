@@ -5,8 +5,13 @@ import AppLike from '@/components/icons/AppLike.vue';
 import { ref, computed } from 'vue';
 import { useCardsStore } from '@/stores/cards';
 import SelectionHistory, { type HistoryElem } from '@/components/SelectionHistory.vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 
+function match() {
+  router.push({ name: 'match' });
+}
 const cardsStore = useCardsStore();
 cardsStore.getCards();
 
@@ -57,10 +62,11 @@ const nextCard = (e:MouseEvent) => {
             <div class="filter-color" :style="{ backgroundColor: colorCard }" />
         </AppCard>
         <AppLike width="120px" height="120px" class="unlike-icon" />
+        
     </div>
     <SelectionHistory :history="history" class="selection-history" />
 </div>
-
+<div class="zhopa" @click="match"> </div>
 </template>
 
 <style scoped>
@@ -72,6 +78,14 @@ const nextCard = (e:MouseEvent) => {
     overflow: hidden;
 
     overflow-y: auto
+}
+.zhopa {
+width: 40px;
+height: 40px;
+position: absolute;
+right: 10px;
+bottom: 10px;
+background-color: brown;
 }
 .div-card {
     height: 100%;

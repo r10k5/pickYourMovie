@@ -11,11 +11,12 @@ defineProps<AppDotsElastic>();
 <style scoped>
 .dot-elastic {
     position: relative;
-    width: 10px;
-    height: 10px;
-    border-radius: 5px;
-    background-color: #EBEBEB;
-    color: #EBEBEB;
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+    background-color: #C2C2C2;
+    color: #C2C2C2;
     animation: dot-elastic 1s infinite linear;
 }
 .dot-elastic::before, .dot-elastic::after {
@@ -25,21 +26,21 @@ defineProps<AppDotsElastic>();
     top: 0;
 }
 .dot-elastic::before {
-    left: -15px;
-    width: 10px;
-    height: 10px;
-    border-radius: 5px;
-    background-color: #EBEBEB;
-    color: #EBEBEB;
+    left: -40px;
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+    background-color: #C2C2C2;
+    color: #C2C2C2;
     animation: dot-elastic-before 1s infinite linear;
 }
 .dot-elastic::after {
-    left: 15px;
-    width: 10px;
-    height: 10px;
-    border-radius: 5px;
-    background-color: #EBEBEB;
-    color: #EBEBEB;
+    left: 40px;
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+    background-color: #C2C2C2;
+    color: #C2C2C2;
     animation: dot-elastic-after 1s infinite linear;
 }
 

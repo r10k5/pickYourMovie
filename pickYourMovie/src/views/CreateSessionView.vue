@@ -120,7 +120,7 @@ function saveUser() {
             <p class="joinedMembers">
                 4/5
             </p>
-            <AppDotsElastic class="dotsElastic"/>
+            <AppDotsElastic class="dotsElastic"> </AppDotsElastic>
             <div class="goButton" @click="nextToSession">
                 <p class="goTitle">Go</p>
             </div>
@@ -262,7 +262,7 @@ function saveUser() {
     margin: 0 0 0 40px;
 }
 .dotsElastic {
-    margin: 34px 64px;
+    margin: 32px 96px;
 
 }
 .goButton {
