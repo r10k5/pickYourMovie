@@ -47,7 +47,7 @@ function saveUser() {
         isModalOpen.value = false;
         return;
     }
-    alert('Имя должно быть больше двух символов');
+    alert('Имя должно быть больше трех символов');
 }
 </script>
 
