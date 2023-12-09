@@ -1,13 +1,10 @@
 <script setup lang="ts">
-    interface AppDotsElastic {
-    width: string;
-    height: string;
-}
-defineProps<AppDotsElastic>();
 </script>
+
 <template>
     <div class="dot-elastic"></div>
 </template>
+
 <style scoped>
 .dot-elastic {
     position: relative;

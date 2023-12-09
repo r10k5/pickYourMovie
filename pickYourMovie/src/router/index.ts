@@ -36,6 +36,13 @@ const router = createRouter({
     },
 
     {
+      path: '/connect-session/:uid',
+      name: 'session',
+      component: CreateSessionView,
+      meta: { title: 'Присоединиться к сессии' }
+    },
+
+    {
       path: '/match',
       name: 'match',
       component: MatchView

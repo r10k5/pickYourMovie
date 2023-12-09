@@ -1,5 +1,18 @@
 <script setup lang="ts">
 import AppCopyIcon from "@/components/icons/AppCopyIcon.vue";
+
+export interface AppLinkAndCode {
+    link?: string;
+}
+
+const props = withDefaults(defineProps<AppLinkAndCode>(), {
+    link: ''
+});
+
+const copyLink = async () => {
+    await window.navigator.clipboard.writeText(props.link);
+    // если нужно всплывашку, то добавлять код сюда для её показа
+}
 </script>
 
 <template>
@@ -8,10 +21,10 @@ import AppCopyIcon from "@/components/icons/AppCopyIcon.vue";
             <p class="choosing-text">
             <slot></slot> </p>
         </div>
-            <u class="linktextbox">
-                https://github.com...
-            </u>
-        <AppCopyIcon class="copy" width="46px" height="56px"/>
+        <u class="linktextbox">
+            {{ link }}
+        </u>
+        <AppCopyIcon class="copy" width="46px" height="56px" @click="copyLink" />
     </div>
 </template>
 
@@ -23,6 +36,9 @@ import AppCopyIcon from "@/components/icons/AppCopyIcon.vue";
     margin: 0 0;
     padding: 0;
     font-weight: 440px;
+    white-space: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
 }
 .field {
     width: 654px;
@@ -50,6 +66,7 @@ import AppCopyIcon from "@/components/icons/AppCopyIcon.vue";
     margin:8px 1px;
     width: 46px;
     height: 56px;
+    cursor: pointer;
 }
 .choosing-text {
     color: #9B9B9B;

@@ -1,21 +1,14 @@
 import { defineStore } from 'pinia'
-import axios from 'axios'
 
-export interface User {
+export interface UserState {
   name: string;
 }
 
-export interface UserState {
-  user?: User;
-}
-
 export const useUserStore = defineStore('user', {
-    state: (): UserState => ({  }),
-    actions: {
-        newUser(name: string) {
-            this.user = {
-                name
-            }
-        }
+  state: (): UserState => ({ name: '' }),
+  actions: {
+    newUser(name: string) {
+      this.name = name;
+    }
   }
 })

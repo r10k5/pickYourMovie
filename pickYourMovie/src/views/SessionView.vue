@@ -21,7 +21,6 @@ const history = ref<HistoryElem[]>([]);
 
 const cardIndex = ref(0);
 const card = computed(() => cardsStore.cards[cardIndex.value]);
-console.log(cardsStore.cards)
 
 const followMouse = (e: MouseEvent) => {
     const cordX = e.clientX;

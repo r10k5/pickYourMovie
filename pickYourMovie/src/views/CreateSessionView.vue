@@ -1,27 +1,38 @@
 <script lang="ts" setup>
-
 import AppChooseVariant from '@/components/AppChooseVariant.vue';
 import AppMinus from '@/components/icons/AppMinus.vue';
 import AppPlus from '@/components/icons/AppPlus.vue';
 import AppDeleteMember from '@/components/icons/AppDeleteMember.vue';
 import AppCheckMark from '@/components/icons/AppCheckMark.vue';
 import AppLinkAndCodeVue from '@/components/AppLinkAndCode.vue';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { genres } from '@/scripts/genres';
 import { types } from '@/scripts/types';
-import { ref } from 'vue';
+import { computed, ref, onUnmounted } from 'vue';
 import AppMyModal from '@/components/AppMyModal.vue';
 import AppDotsElastic from '@/components/AppDotsElastic.vue';
+import { useSessionStore } from '@/stores/session';
 import { useUserStore } from '@/stores/user';
 
 const router = useRouter();
+const route = useRoute();
+const sessionStore = useSessionStore();
+const user = useUserStore();
+const session = computed(() => sessionStore.session);
+const sessionError = computed(() => sessionStore.error);
+const sessionUsersString = computed(() => ', ' + session.value.users.join(', '));
 
-function nextToSession() {
-  router.push({ name: 'session' });
+async function createSession() {
+    await sessionStore.createSession(userName.value, currentType.value, currentGenre.value, limit.value);
 }
+
+onUnmounted(() => {
+    sessionStore.stopInfinityUpdate();
+})
 
 const currentType = ref(1);
 const currentGenre = ref(1);
+const limit = ref(2);
 
 function changeType(value: string) {
     const choosenType = types.find((item) => item.value === value) 
@@ -37,26 +48,56 @@ function changeGenre(value: string) {
     }
 }
 
+function decreaseLimit() {
+    if (limit.value > 2) {
+        limit.value--;
+    }
+}
+
+function increaseLimit() {
+    if (limit.value < 6) {
+        limit.value++;
+    }
+}
+
 const isModalOpen = ref(true);
 const userName = ref('');
-const userStore = useUserStore();
 
-function saveUser() {
+async function saveUser() {
     if (userName.value.length > 3) {
-        userStore.newUser(userName.value);
         isModalOpen.value = false;
+
+        if (route.params.uid) {
+            await sessionStore.connectToSession(route.params.uid.toString(), userName.value);
+        }
+
         return;
     }
     alert('Имя должно быть больше трех символов');
 }
+
+const sessionLink = computed(() => {
+    if (session?.value?.uid === undefined) {
+        return undefined;
+    }
+
+    return `${window.origin}/connect-session/${session?.value?.uid}`;
+});
+
+const usersCount = computed(() => {
+    if (session?.value?.users) {
+        return session?.value?.users.length + 1;
+    }
+
+    return 1;
+})
 </script>
 
 <template>
     <!-- смотреть компонент AppChooseVariant -->
     <div class="session">
-        <AppMyModal v-if="isModalOpen" :has-close="false">
+        <AppMyModal v-if="isModalOpen && !user.name.length" :has-close="false">
             <div class="modal-container">
-
                 <p class="modal-header-text"> Вы собираетесь присоединиться к сессии! Как к Вам обращаться? </p>
                 <p class="modal-text">Имя будет отображаться для участников сессии.</p>
                 <input v-model="userName" type="text" class="modal-input"/>
@@ -74,22 +115,31 @@ function saveUser() {
             </AppChooseVariant>
         </div>
 
+        <p v-if="sessionError.length">
+            {{ sessionError }}
+        </p>
+
         <p class="warning">
             Ссылка для подключения и персональный код команды появится после заполнения всех полей
         </p>
 
         <div class= "members">
-            <AppMinus width="56" height="56" class="minus" />
+            <template v-if="!session.uid">
+                <AppMinus width="56" height="56" class="minus" @click="decreaseLimit" />
 
-            <p class="countMembers">
-                2
-            </p>
+                <p class="countMembers">
+                    {{ limit }}
+                </p>
 
-            <AppPlus width="56" height="56" class="plus" />
+                <AppPlus width="56" height="56" class="plus" @click="increaseLimit" />
+            </template>
 
             <div class="textBox"> 
                 <p class="membersList">
-                    Список участников
+                    {{ session?.creatorName ?? userName }}
+                    <template v-if="session?.users?.length">
+                        {{ sessionUsersString }}
+                    </template>
                 </p>
             </div>
         </div>
@@ -99,7 +149,7 @@ function saveUser() {
             <p class="excludeText">
                 Исключить
             </p>
-            <div class="confirmAndSave" @click="nextToSession">
+            <div v-if="!sessionStore.session?.uid" class="confirmAndSave" @click="createSession">
                 <p class="confirm">
                     Подтверждаю
                 </p>
@@ -107,9 +157,9 @@ function saveUser() {
             </div>
         </div>
 
-        <div class="linkAndCode">
-            <AppLinkAndCodeVue class="linkTextBox"> 
-                Ссылка для подключения 
+        <div class="linkAndCode" v-if="sessionStore.session?.uid">
+            <AppLinkAndCodeVue class="linkTextBox" :link="sessionLink"> 
+                Ссылка для подключения
             </AppLinkAndCodeVue>
         </div>
 
@@ -117,14 +167,16 @@ function saveUser() {
             <p class="membersTitle">
                 Участники
             </p>
+
             <p class="joinedMembers">
-                4/5
+                {{ usersCount }}/{{ limit }}
             </p>
-            <AppDotsElastic class="dotsElastic"> </AppDotsElastic>
-            <div class="goButton" @click="nextToSession">
+
+            <AppDotsElastic class="dotsElastic"></AppDotsElastic>
+
+            <div v-if="sessionStore.session?.uid && user.name === session.creatorName" class="goButton" @click="createSession">
                 <p class="goTitle">Go</p>
             </div>
-
         </div>
     </div>
 </template>
@@ -263,7 +315,6 @@ function saveUser() {
 }
 .dotsElastic {
     margin: 32px 96px;
-
 }
 .goButton {
     width: 240px;
@@ -298,6 +349,12 @@ function saveUser() {
     font-size: 28px;
     margin: 64px 232px;
 }
+
+.minus, .plus {
+    cursor: pointer;
+    user-select: none;
+}
+
 .minus{
     height: 56px;
     width: 56px;

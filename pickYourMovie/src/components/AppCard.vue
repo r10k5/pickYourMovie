@@ -20,9 +20,6 @@ const disableRotation = () => {
 }
 const isBig = computed(() => {
     if (nameRef.value) {
-        console.log(nameRef.value.clientWidth)
-        console.log(nameRef.value.scrollWidth)
-
         return nameRef.value.scrollWidth > nameRef.value.clientWidth
     }
 

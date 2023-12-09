@@ -21,7 +21,8 @@ export const useCardsStore = defineStore('cards', {
   state: (): CardState => ({ cards: [] }),
   actions: {
     async getCards() {
-      this.cards.splice(0, this.cards.length, ...(await axios.get<Card[]>('http://127.0.0.1:8000/cards/')).data) 
+      const cards = await axios.get<Card[]>(`${import.meta.env.VITE_API}/cards`);
+      this.cards.splice(0, this.cards.length, ...cards.data);
     }
   }
 })
