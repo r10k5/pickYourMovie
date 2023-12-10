@@ -26,9 +26,9 @@ function createSession() {
         Попробовать
       </button>
     </div>
-    <div class="image">
-      <AppIcon width="861px" height="870px" />
-    </div>
+    <AppIcon width="100%" height="100%" class="image">
+      
+    </AppIcon>
 </div>
 </template>
 
@@ -42,7 +42,6 @@ function createSession() {
   align-items: center;
   height: 100%;
   margin: auto;
-  margin-top: -80px;
 }
 .text-content {
   display: flex;
@@ -55,6 +54,8 @@ function createSession() {
 }
 .image {
   margin-left: 166px;
+  max-width: 870px;
+  max-height: 870px;
 }
 .header {
   color: #EBEBEB;
