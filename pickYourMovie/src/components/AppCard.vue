@@ -82,8 +82,8 @@ const isBig = computed(() => {
 
 .img{
     margin-top: 16px;
-    height: 400px;
-    width: 300px;
+    height: 54%;
+    width: 56%;
     margin-top: 56px;
 }
 .name {

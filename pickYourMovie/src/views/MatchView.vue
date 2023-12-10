@@ -5,6 +5,9 @@ import AppCard from '@/components/AppCard.vue';
 import AppConfetti from '@/components/icons/AppConfetti.vue';
 
 const cardsStore = useCardsStore();
+
+cardsStore.getCards();
+
 const router = useRouter();
 
 function results() {
@@ -51,11 +54,12 @@ background-color: rgb(42, 165, 79);
     justify-content: center;
 }
 .card {
-    height: 600px;
-    margin: -68px 0 0 669px;
+    width:460px;
+    height: 631px;
+    margin: -68px 0 0 709px;
 }
 .matchTable {
-    margin: 7px 802px;
+    margin: 0px 802px;
     color: #EBEBEB;
     font-size: 80px;
     font-weight: 700;

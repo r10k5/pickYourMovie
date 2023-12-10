@@ -11,30 +11,39 @@ function createSession() {
 </script>
 
 <template>
-  <div class="text-content"> 
-    <h2 class="header">
-      Подберем фильм для вашего вечера
-    </h2>
-    <p class="description">
-      Сервис подберет наилучшее решение для семьи и компании!
-    </p>
-    <AppLink link="about" class="link">
-      Подробнее о сервисе ->
-    </AppLink>
-    <button type="button" class="button" @click="createSession">
-      Попробовать
-    </button>
-  </div>
-  <div class="image">
-    <AppIcon width="100%" height="100%" />
-  </div>
+  <div class="home">
+    <div class="text-content"> 
+      <h2 class="header">
+        Подберем фильм для вашего вечера
+      </h2>
+      <p class="description">
+        Сервис подберет наилучшее решение для семьи и компании!
+      </p>
+      <AppLink link="about" class="link">
+        Подробнее о сервисе ->
+      </AppLink>
+      <button type="button" class="button" @click="createSession">
+        Попробовать
+      </button>
+    </div>
+    <div class="image">
+      <AppIcon width="861px" height="870px" />
+    </div>
+</div>
 </template>
 
 <style scoped> 
 .link {
   margin-top: 32px;
 }
-
+.home {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin: auto;
+  margin-top: -80px;
+}
 .text-content {
   display: flex;
   flex-direction: column;
@@ -45,20 +54,19 @@ function createSession() {
   width: 100%;
 }
 .image {
-  padding: 0px 64px 12px 0;
+  margin-left: 166px;
 }
 .header {
   color: #EBEBEB;
   font-size: 72px;
   font-weight: 400;
   margin: 0;
-  margin-bottom: 44px;
 }
 .description {
   color: #cecece;
   font-size: 40px;
   font-weight: 400;
-  margin: 0;
+  margin-top: 44px;
   font-style: normal;
   line-height: normal;
 }
@@ -66,15 +74,15 @@ function createSession() {
   cursor: pointer;
   border-radius: 60px;
   background: linear-gradient(180deg, #E8505B 0%, #8B3037 100%);
-  margin: auto 0 0 0;
+  margin-top: 320px;
   color: #E7E6E6;
   font-size: 40px;
   font-weight: 400;
   border: none;
-  width: 100%;
+  width: 764px;
+  height: 120px;
   padding: 36px 0px;
   box-shadow: 0px 4px 4px 0px rgba(33, 23, 23, 0.50);
-
 }
 @media (max-width: 1780px) {
   .description {
@@ -87,5 +95,4 @@ function createSession() {
     font-size: 20px;
   }
 }
-
 </style>

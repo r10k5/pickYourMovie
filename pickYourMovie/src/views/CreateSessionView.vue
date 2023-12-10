@@ -94,6 +94,7 @@ const usersCount = computed(() => {
 </script>
 
 <template>
+    <div class="container">
     <!-- смотреть компонент AppChooseVariant -->
     <div class="session">
         <AppMyModal v-if="isModalOpen && !user.name.length" :has-close="false">
@@ -179,9 +180,17 @@ const usersCount = computed(() => {
             </div>
         </div>
     </div>
+</div>
 </template>
 
 <style scoped>
+.container {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    margin:auto;
+    height: 100vh;
+}
 .modal-button {
     min-height: 60px;
     min-width: 120px;
