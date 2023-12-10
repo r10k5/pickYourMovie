@@ -5,10 +5,13 @@ export interface UserState {
 }
 
 export const useUserStore = defineStore('user', {
-  state: (): UserState => ({ name: '' }),
+  state: (): UserState => ({
+    name: localStorage.getItem('user-name') ?? ''
+  }),
   actions: {
     newUser(name: string) {
       this.name = name;
+      localStorage.setItem('user-name', name);
     }
   }
 })

@@ -1,14 +1,8 @@
 <script lang="ts" setup>
-import type { Card } from '@/stores/cards';
-
-
-export type HistoryElem = {
-    card: Card,
-    isLiked: boolean,
-}
+import type { History } from '@/stores/session';
 
 interface SelectionHistoryProps {
-    history: HistoryElem[];
+    history: History[];
 }
 
 defineProps<SelectionHistoryProps>();
@@ -16,10 +10,10 @@ defineProps<SelectionHistoryProps>();
 
 <template>
     <div class="div-selected">
-        <p v-for="elem in history" class="selected-movie" :style="{ color: elem.isLiked ? '#7ED09E' : '#E8505B' }" >
-            {{ elem.card.name }} ({{ elem.card.genres.join(', ') }})
+        <p v-for="elem in history" class="selected-movie" :style="{ color: elem.isLike ? '#7ED09E' : '#E8505B' }" >
+            {{ elem.user }} - {{ elem.card.name }} ({{ elem.card.genres.join(', ') }})
             <template v-if="elem.card.duration_all != 0">
-                - {{ elem.card.duration_all }} минут
+                - {{ elem.card.duration_sall }} минут
             </template>
         </p>
     </div>

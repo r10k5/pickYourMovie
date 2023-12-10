@@ -2,25 +2,55 @@
 import AppCard from '@/components/AppCard.vue';
 import AppUnlike from '@/components/icons/AppUnlike.vue';
 import AppLike from '@/components/icons/AppLike.vue';
-import { ref, computed } from 'vue';
-import { useCardsStore } from '@/stores/cards';
-import SelectionHistory, { type HistoryElem } from '@/components/SelectionHistory.vue';
-import { useRouter } from 'vue-router';
+import { ref, computed, onMounted } from 'vue';
+import SelectionHistory from '@/components/SelectionHistory.vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useSessionStore } from '@/stores/session';
+import { useUserStore } from '@/stores/user';
 
 const router = useRouter();
+const route = useRoute();
+const sessionStore = useSessionStore();
+const userStore = useUserStore();
+
+const session = computed(() => sessionStore.session);
+
+onMounted(() => {
+    if (!session.value.uid) {
+        if (route.params.uid) {
+            if (userStore.name) {
+                sessionStore.getSession(route.params.uid.toString(), userStore.name)
+                    .then(data => {
+                        if (data.error) {
+                            router.push({ name: 'not-found' });
+                            return;
+                        }
+
+                        if (data.status !== 'started') {
+                            router.push({ name: 'not-found' });
+                            return;
+                        }
+
+                        sessionStore.updateSessionLocal(data);
+                        sessionStore.runInfinityUpdate();
+                    });
+                return;
+            }
+        }
+    }
+
+    router.push({ name: 'not-found' });
+});
 
 function match() {
   router.push({ name: 'match' });
 }
-const cardsStore = useCardsStore();
-cardsStore.getCards();
 
 const rotateCard = ref('rotate(0deg)');
 const colorCard = ref('transparent');
-const history = ref<HistoryElem[]>([]);
 
 const cardIndex = ref(0);
-const card = computed(() => cardsStore.cards[cardIndex.value]);
+const card = computed(() => session.value.cards[cardIndex.value]);
 
 const followMouse = (e: MouseEvent) => {
     const cordX = e.clientX;
@@ -36,36 +66,36 @@ const followMouse = (e: MouseEvent) => {
     colorCard.value = 'rgba(232, 80, 91, 0.25)';
 }
 
-const nextCard = (e:MouseEvent) => {
+const nextCard = (e: MouseEvent) => {
     const cordX = e.clientX;
     const widthScreen = window.innerWidth / 2;
-    const card = cardsStore.cards[cardIndex.value];
-    cardIndex.value = cardIndex.value+1;
+    const card = session.value.cards[cardIndex.value];
+    cardIndex.value = cardIndex.value + 1;
 
     if (cordX > widthScreen) {
-        history.value.push({ card, isLiked: true })
+        sessionStore.likeCard(card);
         // счетчик понравившихся
         return
-    } 
-    history.value.push({ card, isLiked: false })
+    }
+    sessionStore.unlikeCard(card);
     // счетчик непонравившихся
 }
 
 </script>
 
 <template>
-<div v-if="card" class="container" @mouseover="followMouse" @click="nextCard">
-    <div class="div-card"> 
-        <AppUnlike width="120px" height="120px" class="unlike-icon" />
-        <AppCard :img="card.filename" :name="card.name" :duration_all="card.duration_all" :genres="card.genres" :style="{ transform: rotateCard }" class="card"> 
-            <div class="filter-color" :style="{ backgroundColor: colorCard }" />
-        </AppCard>
-        <AppLike width="120px" height="120px" class="unlike-icon" />
-        
+    <div v-if="session && card" class="container" @mouseover="followMouse" @click="nextCard">
+        <div class="div-card"> 
+            <AppUnlike width="120px" height="120px" class="unlike-icon" />
+            <AppCard :img="card.filename" :name="card.name" :duration_all="card.duration_all" :genres="card.genres" :style="{ transform: rotateCard }" class="card"> 
+                <div class="filter-color" :style="{ backgroundColor: colorCard }" />
+            </AppCard>
+            <AppLike width="120px" height="120px" class="unlike-icon" />
+            
+        </div>
+        <SelectionHistory :history="session.history" class="selection-history" />
     </div>
-    <SelectionHistory :history="history" class="selection-history" />
-</div>
-<div class="zhopa" @click="match"> </div>
+    <div class="zhopa" @click="match"></div>
 </template>
 
 <style scoped>

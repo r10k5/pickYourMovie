@@ -8,7 +8,7 @@ import AppLinkAndCodeVue from '@/components/AppLinkAndCode.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { genres } from '@/scripts/genres';
 import { types } from '@/scripts/types';
-import { computed, ref, onUnmounted } from 'vue';
+import { computed, ref, onUnmounted, onMounted, watch } from 'vue';
 import AppMyModal from '@/components/AppMyModal.vue';
 import AppDotsElastic from '@/components/AppDotsElastic.vue';
 import { useSessionStore } from '@/stores/session';
@@ -20,15 +20,32 @@ const sessionStore = useSessionStore();
 const user = useUserStore();
 const session = computed(() => sessionStore.session);
 const sessionError = computed(() => sessionStore.error);
+const sessionStatus = computed(() => session.value.status);
 const sessionUsersString = computed(() => ', ' + session.value.users.join(', '));
 
 async function createSession() {
     await sessionStore.createSession(userName.value, currentType.value, currentGenre.value, limit.value);
 }
 
-onUnmounted(() => {
+async function startSession() {
+    await sessionStore.startSession();
+}
+
+onMounted(() => {
+    sessionStore.clearSession();
     sessionStore.stopInfinityUpdate();
-})
+});
+
+onUnmounted(() => {
+    sessionStore.clearSession();
+    sessionStore.stopInfinityUpdate();
+});
+
+watch(sessionStatus, (value) => {
+    if (value === 'started' && session.value.uid) {
+        router.push({ name: 'session', params: { uid: session.value.uid } });
+    }
+});
 
 const currentType = ref(1);
 const currentGenre = ref(1);
@@ -61,7 +78,13 @@ function increaseLimit() {
 }
 
 const isModalOpen = ref(true);
-const userName = ref('');
+const userName = ref(useUserStore().name);
+
+if (userName.value.length > 0) {
+    if (route.params.uid) {
+        sessionStore.connectToSession(route.params.uid.toString(), userName.value);
+    }
+}
 
 async function saveUser() {
     if (userName.value.length > 3) {
@@ -175,7 +198,7 @@ const usersCount = computed(() => {
 
             <AppDotsElastic class="dotsElastic"></AppDotsElastic>
 
-            <div v-if="sessionStore.session?.uid && user.name === session.creatorName" class="goButton" @click="createSession">
+            <div v-if="sessionStore.session?.uid && user.name === session.creatorName" class="goButton" @click="startSession">
                 <p class="goTitle">Go</p>
             </div>
         </div>
