@@ -212,7 +212,8 @@ const usersCount = computed(() => {
     justify-content: center;
     align-items: center;
     margin:auto;
-    height: 100vh;
+    height: 100%;
+    width: 100%;
 }
 .modal-button {
     min-height: 60px;

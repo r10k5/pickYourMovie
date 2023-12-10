@@ -32,9 +32,9 @@ function results() {
         <u class="resultsLink" @click="results">
             Перейти к результатам->
         </u>
+        <AppConfetti width="60%" class="confetti"> </AppConfetti>
+        <AppConfetti width="60%" class="confetti2"> </AppConfetti>
     </div>
-    <AppConfetti width="60%" class="confetti"> </AppConfetti>
-    <AppConfetti width="60%" class="confetti2"> </AppConfetti>
     <div class="zhopa" @click="results">
     </div>
 </template>
