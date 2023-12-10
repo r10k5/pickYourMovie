@@ -5,6 +5,7 @@ import CreateSessionView from '@/views/CreateSessionView.vue'
 import SessionView from '@/views/SessionView.vue'
 import MatchView from '@/views/MatchView.vue'
 import ResultsView from '@/views/ResultsView.vue'
+import NotFoundView from '@/views/NotFoundView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -30,14 +31,14 @@ const router = createRouter({
     },
 
     {
-      path: '/session',
+      path: '/session/:uid',
       name: 'session',
       component: SessionView
     },
 
     {
       path: '/connect-session/:uid',
-      name: 'session',
+      name: 'connect-session',
       component: CreateSessionView,
       meta: { title: 'Присоединиться к сессии' }
     },
@@ -54,6 +55,11 @@ const router = createRouter({
       component: ResultsView
     },
 
+    {
+      path: '/404',
+      name: 'not-found',
+      component: NotFoundView,
+    },
   ]
 })
 

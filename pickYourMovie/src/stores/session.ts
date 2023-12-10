@@ -1,15 +1,16 @@
 import { defineStore } from 'pinia'
 import { useUserStore } from '@/stores/user';
 import axios from 'axios'
+import type { Card } from './cards';
 
 export interface History {
   user: string;
-  cardId: number;
+  card: Card;
   isLike: boolean;
 }
 
 export interface SessionResult {
-  cardId: number;
+  card: Card;
   likeCount: number;
 }
 
@@ -21,8 +22,9 @@ export interface Session {
   type?: number;
   limit?: number;
   history: History[];
-  status?: boolean;
+  status?: 'pending' | 'started' | 'finished';
   result: SessionResult[];
+  cards: Card[];
 }
 
 export interface SessionState {
@@ -37,6 +39,7 @@ export const useSessionStore = defineStore('session', {
       users: [],
       history: [],
       result: [],
+      cards: [],
     },
     error: ''
   }),
@@ -61,11 +64,57 @@ export const useSessionStore = defineStore('session', {
         this.updateSessionLocal(requestResult);
         this.runInfinityUpdate();
       }
-      console.log(requestResult);
+    },
+
+    async changeCardLike(card: Card, value: boolean) {
+      const userStore = useUserStore();
+
+      const requestResult = await axios.post(`${import.meta.env.VITE_API}/cards/like-card/${this.session.uid}`, {
+        card_id: card.id,
+        name: userStore.name,
+        value
+      })
+        .then((resp) => resp.data)
+        .catch((err) => {
+          this.error = err.response?.data;
+          return null;
+        });
+
+        if (requestResult) {
+          this.updateSessionLocal(requestResult);
+        }
+    },
+
+    likeCard(card: Card) {
+      return this.changeCardLike(card, true);
+    },
+
+
+    unlikeCard(card: Card) {
+      return this.changeCardLike(card, false);
+    },
+
+    async startSession() {
+      const userStore = useUserStore();
+
+      if (userStore.name && this.session.uid) {
+        const result = await axios.post(`${import.meta.env.VITE_API}/cards/start-session/${this.session.uid}`, {
+          name: userStore.name
+        })
+          .then((resp) => resp.data)
+          .catch((err) => err.response?.data);
+
+        if (result.error) {
+          this.error = result.error;
+          return;
+        }
+
+        this.updateSessionLocal(result);
+      }
     },
 
     async connectToSession(uid: string, username: string) {
-      const checkResult = await axios.get(`${import.meta.env.VITE_API}/cards/check-session/${uid}`)
+      const checkResult = await axios.post(`${import.meta.env.VITE_API}/cards/check-session/${uid}`)
         .then((resp) => resp.data)
         .catch((error) => error.response?.data);
 
@@ -91,22 +140,23 @@ export const useSessionStore = defineStore('session', {
       this.runInfinityUpdate();
     },
 
-    getSession(uid: string, username: string) {
-      return axios.post(`${import.meta.env.VITE_API}/cards/get-session/${uid}`, {
+    async getSession(uid: string, username: string) {
+      return await axios.post(`${import.meta.env.VITE_API}/cards/get-session/${uid}`, {
         name: username,
       })
         .then((resp) => resp.data);
     },
 
     runInfinityUpdate() {
-      if (this.session.uid) {
+      const sessionUid = this.session.uid;
+      if (sessionUid) {
         if (this.timerId) {
           clearTimeout(this.timerId);
         }
 
         const userStore = useUserStore();
         const update = () => {
-           this.getSession(this.session.uid, userStore.name)
+           this.getSession(sessionUid, userStore.name)
             .then((session) => {
               if (!session.error) {
                 this.updateSessionLocal(session);
@@ -126,16 +176,29 @@ export const useSessionStore = defineStore('session', {
     },
 
     updateSessionLocal(session) {
-      console.log(session);
       this.session.uid = session.uid;
       this.session.creatorName = session.creator_name;
       this.session.users.splice(0, this.session.users.length, ...session.guest_names);
       this.session.genre = session.genre;
       this.session.type = session.type;
       this.session.limit = session.limit;
-      this.session.history.splice(0, this.session.users.length, ...session.history);
+      this.session.history.splice(0, this.session.history.length, ...session.history);
       this.session.status = session.status;
-      this.session.result.splice(0, this.session.users.length, ...session.result);
+      this.session.result.splice(0, this.session.result.length, ...session.result);
+      this.session.cards.splice(0, this.session.cards.length, ...session.cards);
+    },
+
+    clearSession() {
+      this.session.uid = undefined;
+      this.session.creatorName = undefined;
+      this.session.users.splice(0, this.session.users.length);
+      this.session.genre = undefined;
+      this.session.type = undefined;
+      this.session.limit = undefined;
+      this.session.history.splice(0, this.session.history.length);
+      this.session.status = undefined;
+      this.session.result.splice(0, this.session.result.length);
+      this.session.cards.splice(0, this.session.cards.length);
     }
   }
 })
