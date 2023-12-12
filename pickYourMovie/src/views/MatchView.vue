@@ -1,14 +1,49 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { useCardsStore } from '@/stores/cards';
 import AppCard from '@/components/AppCard.vue';
 import AppConfetti from '@/components/icons/AppConfetti.vue';
+import { useSessionStore } from '@/stores/session';
+import { computed, onMounted } from 'vue';
+import { useUserStore } from '@/stores/user';
 
 const cardsStore = useCardsStore();
+const sessionStore = useSessionStore();
+const userStore = useUserStore();
 
-cardsStore.getCards();
+sessionStore.stopInfinityUpdate();
 
 const router = useRouter();
+const route = useRoute();
+
+const session = computed(() => sessionStore.session);
+const result = computed(() => session.value.result);
+
+onMounted(() => {
+    if (!session.value.uid && !route.params.uid) {
+        router.push({ name: 'not-found' });
+    }
+    
+    if (!session.value.uid && route.params.uid && userStore.name) {
+        sessionStore.getSession(route.params.uid.toString(), userStore.name)
+            .then(data => {
+                if (data.error) {
+                    router.push({ name: 'not-found' });
+                    return;
+                }
+
+                if (data.status !== 'started') {
+                    router.push({ name: 'not-found' });
+                    return;
+                }
+
+                sessionStore.updateSessionLocal(data);
+            });
+        return;
+    }
+});
+
+// cardsStore.getCards();
 
 function results() {
   router.push({ name: 'results' });
@@ -18,11 +53,11 @@ function results() {
 <template>
     <div class="div-match"> 
         <AppCard 
-            v-for="i in 1 " 
-            :img="cardsStore.cards[i].filename" 
-            :name="cardsStore.cards[i].name" 
-            :duration_all="cardsStore.cards[i].duration_all" 
-            :genres="cardsStore.cards[i].genres" 
+            v-if="result.length > 0" 
+            :img="result[0].card.filename" 
+            :name="result[0].card.name" 
+            :duration_all="result[0].card.duration_all" 
+            :genres="result[0].card.genres" 
             class="card"
         >
         </AppCard>

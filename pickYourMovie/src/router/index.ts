@@ -44,7 +44,7 @@ const router = createRouter({
     },
 
     {
-      path: '/match',
+      path: '/match/:uid',
       name: 'match',
       component: MatchView
     },

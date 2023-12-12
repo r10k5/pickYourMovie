@@ -2,7 +2,7 @@
 import AppCard from '@/components/AppCard.vue';
 import AppUnlike from '@/components/icons/AppUnlike.vue';
 import AppLike from '@/components/icons/AppLike.vue';
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import SelectionHistory from '@/components/SelectionHistory.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useSessionStore } from '@/stores/session';
@@ -15,35 +15,38 @@ const userStore = useUserStore();
 
 const session = computed(() => sessionStore.session);
 
-onMounted(() => {
-    if (!session.value.uid) {
-        if (route.params.uid) {
-            if (userStore.name) {
-                sessionStore.getSession(route.params.uid.toString(), userStore.name)
-                    .then(data => {
-                        if (data.error) {
-                            router.push({ name: 'not-found' });
-                            return;
-                        }
-
-                        if (data.status !== 'started') {
-                            router.push({ name: 'not-found' });
-                            return;
-                        }
-
-                        sessionStore.updateSessionLocal(data);
-                        sessionStore.runInfinityUpdate();
-                    });
-                return;
-            }
-        }
+watch(session, (value) => {
+    if (value.result.length > 0) {
+        match();
     }
+}, { deep: true })
 
-    router.push({ name: 'not-found' });
+onMounted(() => {
+    if (!session.value.uid && !route.params.uid) {
+        router.push({ name: 'not-found' });
+    }
+    
+    if (!session.value.uid && route.params.uid && userStore.name) {
+        sessionStore.getSession(route.params.uid.toString(), userStore.name)
+            .then(data => {
+                if (data.error) {
+                    router.push({ name: 'not-found' });
+                    return;
+                }
+
+                if (data.status !== 'started') {
+                    router.push({ name: 'not-found' });
+                    return;
+                }
+
+                sessionStore.updateSessionLocal(data);
+                sessionStore.runInfinityUpdate();
+            });
+    }
 });
 
 function match() {
-  router.push({ name: 'match' });
+  router.push({ name: 'match', params: { uid: session.value.uid } });
 }
 
 const rotateCard = ref('rotate(0deg)');
@@ -95,7 +98,6 @@ const nextCard = (e: MouseEvent) => {
         </div>
         <SelectionHistory :history="session.history" class="selection-history" />
     </div>
-    <div class="zhopa" @click="match"></div>
 </template>
 
 <style scoped>
