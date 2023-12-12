@@ -118,7 +118,6 @@ const usersCount = computed(() => {
 
 <template>
     <div class="container">
-    <!-- смотреть компонент AppChooseVariant -->
     <div class="session">
         <AppMyModal v-if="isModalOpen && !user.name.length" :has-close="false">
             <div class="modal-container">

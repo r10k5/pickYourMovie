@@ -64,24 +64,11 @@ function results() {
         <p class="matchTable">
             Match!
         </p>
-        <u class="resultsLink" @click="results">
-            Перейти к результатам->
-        </u>
         <AppConfetti width="60%" class="confetti"> </AppConfetti>
         <AppConfetti width="60%" class="confetti2"> </AppConfetti>
     </div>
-    <div class="zhopa" @click="results">
-    </div>
 </template>
 <style scoped>
-.zhopa {
-width: 40px;
-height: 40px;
-position: absolute;
-right: 10px;
-bottom: 10px;
-background-color: rgb(42, 165, 79);
-}
 .div-match {
     height: 100%;
     width: 100%;
@@ -102,12 +89,7 @@ background-color: rgb(42, 165, 79);
     -2px 0 0 #7ED09E,
     -4px 0 0 #E8505B;
 }
-.resultsLink {
-    margin: 0 739px;
-    color: #E8505B;
-    font-size: 32px;
-    font-weight: 400;
-}
+
 .confetti, .confetti2 {
     position: absolute;
     bottom: -550px;

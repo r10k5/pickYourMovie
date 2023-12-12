@@ -3,8 +3,9 @@ import AppIcon from '@/components/icons/AppIcon.vue';
 import AppLink from '@/components/AppLink.vue';
 import { useRouter } from 'vue-router';
 
+// Создаем инструмент для управления маршрутами
 const router = useRouter();
-
+// Функция для перехода к странице создания сессии
 function createSession() {
   router.push({ name: 'create-session' });
 }
@@ -33,6 +34,7 @@ function createSession() {
 </template>
 
 <style scoped> 
+/* Задаем стили */
 .link {
   margin-top: 32px;
 }
@@ -85,6 +87,7 @@ function createSession() {
   padding: 36px 0px;
   box-shadow: 0px 4px 4px 0px rgba(33, 23, 23, 0.50);
 }
+/* Медиазапрос для адаптации стилей при изменении размера экрана */
 @media (max-width: 1780px) {
   .description {
     font-size: 20px;
