@@ -40,8 +40,9 @@ function createSession() {
   display:flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  height: 80%;
   margin: auto;
+  margin-top: 0;
 }
 .text-content {
   display: flex;
@@ -61,7 +62,7 @@ function createSession() {
   color: #EBEBEB;
   font-size: 72px;
   font-weight: 400;
-  margin: 0;
+  margin: auto;
 }
 .description {
   color: #cecece;
@@ -75,7 +76,7 @@ function createSession() {
   cursor: pointer;
   border-radius: 60px;
   background: linear-gradient(180deg, #E8505B 0%, #8B3037 100%);
-  margin-top: 320px;
+  margin-top: 224px;
   color: #E7E6E6;
   font-size: 40px;
   font-weight: 400;
