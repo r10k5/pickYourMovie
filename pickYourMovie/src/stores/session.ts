@@ -27,6 +27,19 @@ export interface Session {
   cards: Card[];
 }
 
+export interface SessionData {
+  uid?: string;
+  guest_names: string[];
+  creator_name?: string;
+  genre?: number;
+  type?: number;
+  limit?: number;
+  history: History[];
+  status?: 'pending' | 'started' | 'finished';
+  result: SessionResult[];
+  cards: Card[];
+}
+
 export interface SessionState {
   session: Session;
   error: string;
@@ -175,7 +188,7 @@ export const useSessionStore = defineStore('session', {
       }
     },
 
-    updateSessionLocal(session) {
+    updateSessionLocal(session: SessionData) {
       this.session.uid = session.uid;
       this.session.creatorName = session.creator_name;
       this.session.users.splice(0, this.session.users.length, ...session.guest_names);
