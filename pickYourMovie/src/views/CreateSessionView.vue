@@ -212,8 +212,7 @@ const usersCount = computed(() => {
     justify-content: center;
     align-items: center;
     margin:auto;
-    height: 100%;
-    width: 100%;
+    margin-top: 0;
 }
 .modal-button {
     min-height: 60px;
@@ -279,7 +278,7 @@ const usersCount = computed(() => {
 }
 .confirmAndSave{
     display: flex;
-    margin: 0 32px;
+    margin: 0 32px 0 32px;
     border-radius: 10px;
     width: 208px;
     height: 48px;
@@ -300,7 +299,8 @@ const usersCount = computed(() => {
 }
 .deleteMember{
     display: flex;
-    margin: 32px 1098px;
+    margin-left: 1098px;
+    margin-top: 32px;
 }
 .excludeText{
     color: #EBEBEB;
@@ -322,7 +322,8 @@ const usersCount = computed(() => {
     color: #EBEBEB;
     font-family: 'Inter';
     font-size: 28px;
-    margin: 19px 32px;
+    margin-top: 19px;
+    margin-left: 32px;
 }
 .members {
     display: flex;
@@ -330,7 +331,8 @@ const usersCount = computed(() => {
 }
 .membersCounter {
     display: flex;
-    margin: 32px 696px;
+    margin-top: 32px;
+    margin-left: 696px;
 }
 .membersTitle {
     flex-direction: column;

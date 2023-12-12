@@ -42,14 +42,13 @@ function createSession() {
   align-items: center;
   height: 80%;
   margin: auto;
-  margin-top: 0;
 }
-.text-content {
+.text-content { 
   display: flex;
   flex-direction: column;
   max-width: 764px;
   padding: 24px 0 12px 64px;
-}
+} 
 .text-content, .image {
   width: 100%;
 }
