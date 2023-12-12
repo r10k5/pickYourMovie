@@ -13,7 +13,7 @@ defineProps<SelectionHistoryProps>();
         <p v-for="elem in history" class="selected-movie" :style="{ color: elem.isLike ? '#7ED09E' : '#E8505B' }" >
             {{ elem.user }} - {{ elem.card.name }} ({{ elem.card.genres.join(', ') }})
             <template v-if="elem.card.duration_all != 0">
-                - {{ elem.card.duration_sall }} минут
+                - {{ elem.card.duration_all }} минут
             </template>
         </p>
     </div>
