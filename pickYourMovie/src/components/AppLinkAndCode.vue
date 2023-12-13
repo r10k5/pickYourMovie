@@ -10,7 +10,19 @@ const props = withDefaults(defineProps<AppLinkAndCode>(), {
 });
 
 const copyLink = async () => {
-    await window.navigator.clipboard.writeText(props.link);
+    if (window.navigator.clipboard) {
+        await window.navigator.clipboard.writeText(props.link);
+    } else {
+        if (document.execCommand) {
+            const tempInput = document.createElement("input");
+            tempInput.setAttribute('style', 'position: absolute; left: -1000px; top: -1000px');
+            tempInput.value = props.link;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+        }
+    }
     // если нужно всплывашку, то добавлять код сюда для её показа
 }
 </script>
