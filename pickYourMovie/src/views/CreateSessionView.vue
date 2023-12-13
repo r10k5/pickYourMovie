@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+// Импорт компонентов и библиотек
 import AppChooseVariant from '@/components/AppChooseVariant.vue';
 import AppMinus from '@/components/icons/AppMinus.vue';
 import AppPlus from '@/components/icons/AppPlus.vue';
@@ -14,6 +15,7 @@ import AppDotsElastic from '@/components/AppDotsElastic.vue';
 import { useSessionStore } from '@/stores/session';
 import { useUserStore } from '@/stores/user';
 
+// Инициализация объектов для работы с маршрутами, сессией и пользователями
 const router = useRouter();
 const route = useRoute();
 const sessionStore = useSessionStore();
@@ -23,14 +25,17 @@ const sessionError = computed(() => sessionStore.error);
 const sessionStatus = computed(() => session.value.status);
 const sessionUsersString = computed(() => ', ' + session.value.users.join(', '));
 
+// Асинхронная функция для создания сессии
 async function createSession() {
     await sessionStore.createSession(userName.value, currentType.value, currentGenre.value, limit.value);
 }
 
+// Асинхронная функция для начала сессии
 async function startSession() {
     await sessionStore.startSession();
 }
 
+// Запуск и завершение компонента
 onMounted(() => {
     sessionStore.clearSession();
     sessionStore.stopInfinityUpdate();
@@ -41,16 +46,19 @@ onUnmounted(() => {
     sessionStore.stopInfinityUpdate();
 });
 
+// Отслеживание изменения статуса сессии и перенаправление на соответствующий маршрут
 watch(sessionStatus, (value) => {
     if (value === 'started' && session.value.uid) {
         router.push({ name: 'session', params: { uid: session.value.uid } });
     }
 });
 
+// Инициализация переменных для типа, жанра и лимита
 const currentType = ref(1);
 const currentGenre = ref(1);
 const limit = ref(2);
 
+// Функции для изменения типа, жанра, уменьшения и увеличения лимита
 function changeType(value: string) {
     const choosenType = types.find((item) => item.value === value) 
     if (choosenType) {
@@ -77,6 +85,7 @@ function increaseLimit() {
     }
 }
 
+// Открытие модального окна и подключение к сессии
 const isModalOpen = ref(true);
 const userName = ref(useUserStore().name);
 
@@ -86,6 +95,7 @@ if (userName.value.length > 0) {
     }
 }
 
+// Асинхронное сохранение пользователя
 async function saveUser() {
     if (userName.value.length > 3) {
         isModalOpen.value = false;
@@ -99,6 +109,7 @@ async function saveUser() {
     alert('Имя должно быть больше трех символов');
 }
 
+// Вычисление ссылки для подключения к сессии
 const sessionLink = computed(() => {
     if (session?.value?.uid === undefined) {
         return undefined;
@@ -107,6 +118,7 @@ const sessionLink = computed(() => {
     return `${window.origin}/connect-session/${session?.value?.uid}`;
 });
 
+// Вычисление количества участников сессии
 const usersCount = computed(() => {
     if (session?.value?.users) {
         return session?.value?.users.length + 1;
@@ -119,6 +131,7 @@ const usersCount = computed(() => {
 <template>
     <div class="container">
     <div class="session">
+        <!-- Модальное окно для ввода имени пользователя -->
         <AppMyModal v-if="isModalOpen && !user.name.length" :has-close="false">
             <div class="modal-container">
                 <p class="modal-header-text"> Вы собираетесь присоединиться к сессии! Как к Вам обращаться? </p>
@@ -129,6 +142,7 @@ const usersCount = computed(() => {
             <button class="modal-button" @click="saveUser">GO</button>
         </AppMyModal>
 
+        <!-- Форма создания сессии -->
         <div class="create-session">
             <AppChooseVariant :current-id="currentType" :list="types" class="category" @choose="changeType"> 
                 Категория:  
@@ -138,6 +152,7 @@ const usersCount = computed(() => {
             </AppChooseVariant>
         </div>
 
+        <!-- Отображение ошибки сессии, если есть -->
         <p v-if="sessionError.length">
             {{ sessionError }}
         </p>
@@ -146,6 +161,7 @@ const usersCount = computed(() => {
             Ссылка для подключения и персональный код команды появится после заполнения всех полей
         </p>
 
+        <!-- Отображение выбора количества участников -->
         <div class= "members">
             <template v-if="!session.uid">
                 <AppMinus width="56" height="56" class="minus" @click="decreaseLimit" />
@@ -157,6 +173,7 @@ const usersCount = computed(() => {
                 <AppPlus width="56" height="56" class="plus" @click="increaseLimit" />
             </template>
 
+            <!-- Отображение списка участников -->
             <div class="textBox"> 
                 <p class="membersList">
                     {{ session?.creatorName ?? userName }}
@@ -167,6 +184,7 @@ const usersCount = computed(() => {
             </div>
         </div>
 
+        <!-- Управление участниками и подтверждение создания сессии -->
         <div class="deleteMember">
             <AppDeleteMember width="78" height="50" class="deleteMemberButton" />
             <p class="excludeText">
@@ -180,12 +198,14 @@ const usersCount = computed(() => {
             </div>
         </div>
 
+        <!-- Отображение ссылки для подключения к сессии -->
         <div class="linkAndCode" v-if="sessionStore.session?.uid">
             <AppLinkAndCodeVue class="linkTextBox" :link="sessionLink"> 
                 Ссылка для подключения
             </AppLinkAndCodeVue>
         </div>
 
+        <!-- Отображение информации о количестве участников -->
         <div class="membersCounter">
             <p class="membersTitle">
                 Участники
@@ -197,6 +217,7 @@ const usersCount = computed(() => {
 
             <AppDotsElastic class="dotsElastic"></AppDotsElastic>
 
+            <!-- Кнопка "Go" для начала сессии, доступна только создателю сессии -->
             <div v-if="sessionStore.session?.uid && user.name === session.creatorName" class="goButton" @click="startSession">
                 <p class="goTitle">Go</p>
             </div>

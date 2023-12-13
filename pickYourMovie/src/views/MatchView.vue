@@ -7,26 +7,37 @@ import { useSessionStore } from '@/stores/session';
 import { computed, onMounted } from 'vue';
 import { useUserStore } from '@/stores/user';
 
+// Инициализация хранилищ
 const cardsStore = useCardsStore();
 const sessionStore = useSessionStore();
 const userStore = useUserStore();
 
+// Остановка автоматического обновления данных сессии
 sessionStore.stopInfinityUpdate();
 
+// Инициализация маршрутизатора и текущего маршрута
 const router = useRouter();
 const route = useRoute();
 
+// Получение данных о текущей сессии и ее результате
 const session = computed(() => sessionStore.session);
 const result = computed(() => session.value.result);
 
+// Обработка события после монтирования компонента
 onMounted(() => {
+
+    // Проверка наличия данных о сессии и параметров маршрута
     if (!session.value.uid && !route.params.uid) {
         router.push({ name: 'not-found' });
     }
     
+     // Если отсутствует UID сессии, но присутствует UID в параметрах маршрута и имя пользователя, 
+    // то выполняется запрос к серверу для получения данных о сессии
     if (!session.value.uid && route.params.uid && userStore.name) {
         sessionStore.getSession(route.params.uid.toString(), userStore.name)
             .then(data => {
+
+                // Обработка ошибок и проверка статуса сессии
                 if (data.error) {
                     router.push({ name: 'not-found' });
                     return;
@@ -37,6 +48,7 @@ onMounted(() => {
                     return;
                 }
 
+                // Обновление данных о сессии
                 sessionStore.updateSessionLocal(data);
             });
         return;
@@ -45,6 +57,7 @@ onMounted(() => {
 
 // cardsStore.getCards();
 
+// Функция для перехода на страницу результатов
 function results() {
   router.push({ name: 'results' });
 }
@@ -52,6 +65,7 @@ function results() {
 
 <template>
     <div class="div-match"> 
+        <!-- Отображение карточки при наличии совпадения -->
         <AppCard 
             v-if="result.length > 0" 
             :img="result[0].card.filename" 
