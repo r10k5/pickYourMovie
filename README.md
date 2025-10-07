@@ -24,5 +24,5 @@ Backend: Python
    ```
 4. Запустите проект
    ```sh
-   npm run dev
+   npm run dev-local
    ```
